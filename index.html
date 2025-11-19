@@ -7,6 +7,8 @@
     <title>Gestion-Personnel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        referrerpolicy="no-referrer" />
 
 </head>
 
@@ -16,7 +18,8 @@
 
             <p class="text-center text-lg font-semibold text-[#0f141e] mb-2">
                 <span class="hidden md:inline">Liste</span>
-                unassigned Staff</p>
+                unassigned Staff
+            </p>
 
             <div class="overflow-x-auto md:overflow-y-auto flex md:flex-col gap-2">
 
@@ -61,20 +64,75 @@
 
         </aside>
 
+
+
         <main class="bg-[#99a1af] flex-1 flex justify-center items-center p-4">
             <div id="grille"
                 class="bg-[url('/bg-bois.png')] grid grid-cols-5 grid-rows-3 w-[95%] border-4 border-black text-[#0f141e] font-medium ">
-                <div class="border-r-4 border-b-4 border-black col-span-2 h-44 flex items-center justify-center">Salle du personnel</div>
-                <div class="border-l-4 border-b-4 border-black col-start-4 h-44 flex items-center justify-center">Réception</div>
-                <div class="border-l-4 border-b-4 border-black h-44 flex items-center justify-center">Salle de sécurité</div>
-                <div class="border-r-4 border-black col-span-2 row-span-2 h-auto flex items-center justify-center">Salle de conférence</div>
-                <div class="border-t-4 border-r-4 border-l-4 col-start-4 row-start-3 border-black h-44 flex items-center justify-center">Salle d’archives
+                <div class="border-r-4 border-b-4 border-black col-span-2 h-44 flex items-center justify-center">Staff
+                    room</div>
+                <div class="border-l-4 border-b-4 border-black col-start-4 h-44 flex items-center justify-center">
+                    Reception</div>
+                <div class="border-l-4 border-b-4 border-black h-44 flex items-center justify-center">Security room
                 </div>
-                <div class="border-t-4 border-black col-start-5 row-start-3 flex items-center justify-center">Salle des serveurs</div>
+                <div class="border-r-4 border-black col-span-2 row-span-2 h-auto flex items-center justify-center">
+                    Conference room</div>
+                <div
+                    class="border-t-4 border-r-4 border-l-4 col-start-4 row-start-3 border-black h-44 flex items-center justify-center">
+                    Archives Room</div>
+                <div class="border-t-4 border-black col-start-5 row-start-3 flex items-center justify-center">Server
+                    room</div>
             </div>
         </main>
 
+
     </div>
+    <!--Modale add worker-->
+    <div class="fixed inset-0 bg-black/40 flex justify-center items-center">
+        <div id="modaleWorker" class="w-[30%] bg-white px-4 py-2 rounded-xl flex flex-col gap-3">
+            
+                <p class="text-green-500 text-xl font-semibold text-center">Add New Worker</p>
+            
+
+            <div class="flex gap-5 w-[100%]">
+                <div class="flex flex-col w-[45%] ml-2">
+                    <label for="name" class="text-sm text-gray-800">Full Name</label>
+                    <input type="text" id="name" class="rounded-md border-2 border-gray p-1 text-sm">
+                </div>
+                <div class="flex flex-col w-[45%]">
+                    <label for="role" class="text-sm text-gray-800">Role</label>
+                    <select name="liste-role" id="role" class="rounded-md border-2 border-gray text-sm p-1">
+                        <option value=""></option>
+                        <option value="receptionniste">Receptionists</option>
+                        <option value="technicien">IT Technicians</option>
+                        <option value="agent">Security guards</option>
+                        <option value="manager">Manager</option>
+                        <option value="nettoyage">Cleaning</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex flex-col w-[96%] ml-2">
+                <label for="photo" class="text-sm text-gray-800">Photo(URL)</label>
+                <input type="text" id="photo" class="rounded-md border-2 border-gray p-1 text-sm">
+            </div>
+            <div class="flex gap-5 w-[100%] ml-2">
+                <div class="flex flex-col w-[45%]">
+                    <label for="email" class="text-sm text-gray-800">Email</label>
+                    <input type="text" id="email" class="rounded-md border-2 border-gray p-1 text-sm">
+                </div>
+                <div class="flex flex-col w-[45%]">
+                    <label for="phone" class="text-sm text-gray-800">phone number</label>
+                    <input type="text" id="phone" class="rounded-md border-2 border-gray p-1 text-sm">
+                </div>
+            </div>
+            <button class="text-sm text-gray-800"><i class="fa-solid fa-plus"></i>Add Experience</button>
+            <div class="flex justify-around">
+                <button class="bg-green-500 text-white w-[35%] rounded-md text-sm">Save</button>
+                <button class="bg-red-500 text-white w-[35%] rounded-md text-sm p-1">Cancel</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>
