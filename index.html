@@ -13,37 +13,21 @@
 <body class="font-[Poppins]">
     <div class="flex h-screen">
         <aside class="ml-2 mt-4 mr-2 flex flex-col gap-4">
+
             <div class="flex justify-center">
-                <p class="text-lg font-medium mb-4">Liste unassigned Staff</p>
+                <p class="text-xl font-semibold mb-4 text-[#0f141e]">Liste unassigned Staff</p>
             </div>
-            <div class="overflow-auto flex flex-col gap-4">
-                <div class="flex gap-3 bg-gray-100 py-2 px-4 rounded-xl">
+            <div class="overflow-auto flex flex-col gap-2">
+
+                <div class="flex items-center gap-3 bg-[#99a1af] pr-4 rounded-xl overflow-hidden">
                     <img src="https://lemonlearning.com/hubfs/Imported_Blog_Media/visu-comprendre-pourquoi-2.jpg"
-                        alt="image employé" class="w-12 h-12 rounded-full">
+                        alt="profile" class="w-16 h-16 rounded-r-full object-cover">
                     <div>
-                        <p>Mhammed Gabigabe</p>
-                        <p>IT</p>
+                        <h3 class="text-white font-medium">Mhammed Gabigabe</h3>
+                        <p class="text-[#1e2939] text-sm">IT</p>
                     </div>
                 </div>
 
-                <div class="flex gap-3 bg-gray-100 py-2 px-4 rounded-xl">
-                    <img src="https://lemonlearning.com/hubfs/Imported_Blog_Media/visu-comprendre-pourquoi-2.jpg"
-                        alt="image employé" class="w-12 h-12 rounded-full">
-                    <div>
-                        <p>Mhammed Gabigabe</p>
-                        <p>IT</p>
-                    </div>
-                </div>
-
-                <div class="flex gap-3 bg-gray-100 py-2 px-4 rounded-xl">
-                    <img src="https://lemonlearning.com/hubfs/Imported_Blog_Media/visu-comprendre-pourquoi-2.jpg"
-                        alt="image employé" class="w-12 h-12 rounded-full">
-                    <div>
-                        <p>Mhammed Gabigabe</p>
-                        <p>IT</p>
-                    </div>
-                </div>
-              
             </div>
             <div class="flex justify-center sticky bottom-0">
                 <button class=" px-4 py-2 bg-green-500 rounded-xl text-white mb-4">Add New Worker</button>
@@ -51,8 +35,15 @@
 
         </aside>
 
-        <main class="bg-gray-200 flex-1">
-
+        <main class="bg-[#99a1af] flex-1 ">
+            <div class="bg-[url('/bg-bois.png')] grid grid-cols-5 grid-rows-3 m-2 border-4 border-black text-[#0f141e] font-medium text-center">
+                <div class="border-r-4 border-b-4 border-black col-span-2 h-44">Salle du personnel</div>
+                <div class="border-l-4 border-b-4 border-black col-start-4 h-44">Réception</div>
+                <div class="border-l-4 border-b-4 border-black h-44">Salle de sécurité</div>
+                <div class="border-r-4 border-black col-span-2 row-span-2 h-auto">Salle de conférence</div>
+                <div class="border-t-4 border-r-4 border-l-4 col-start-4 row-start-3 border-black h-44">Salle d’archives</div>
+                <div class="border-t-4 border-black col-start-5 row-start-3">Salle des serveurs</div>
+            </div>
         </main>
     </div>
 </body>
