@@ -16,6 +16,7 @@ const para_role = document.getElementById("para-role");
 const para_url = document.getElementById("para-url");
 const para_email = document.getElementById("para-email");
 const para_phone = document.getElementById("para-phone");
+const id_photo = document.getElementById("id-photo");
 
 
 
@@ -75,9 +76,17 @@ function verification_presence_format() {
 
 }
 
+url_photo.addEventListener('input',()=>{
+    
+    if(url_photo.value ==""){
+        id_photo.src = "worker.png"
+    }else{
+        id_photo.src = url_photo.value;
+    }
+})
 function ajouter_employe(){
     const employe={
-        
+
     }
 }
 
