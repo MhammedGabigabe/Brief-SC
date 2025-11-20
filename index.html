@@ -87,9 +87,9 @@
 
 
     </div>
-    <!--Modale add worker-->
+    <!--Modale ajouter employé-->
     <div id="modale-ajout" class="fixed inset-0 bg-black/40 flex justify-center items-center hidden">
-        <div class="w-full max-w-lg bg-white px-4 py-2 rounded-xl flex flex-col gap-3 ">
+        <div class="w-full max-w-lg bg-white px-4 py-2 rounded-xl flex flex-col gap-1 ">
 
             <p class="text-green-500 text-xl font-semibold text-center">Add New Worker</p>
             <div class="flex gap-5 w-[100%]">
@@ -111,7 +111,7 @@
                     <p id="para-role" class="text-red-500 text-xs hidden"></p>
                 </div>
             </div>
-            <div class="flex w-[90%] ml-4">
+            <div class="flex w-[95%] ml-4">
                 <div class="flex flex-col w-full">
                     <label for="photo" class="text-sm text-gray-800">Photo(URL)</label>
                     <input type="text" id="url-photo" class="rounded-md border-2 border-gray p-1 text-sm">
@@ -131,16 +131,19 @@
                     <p id="para-phone" class="text-red-500 text-xs hidden"></p>
                 </div>
             </div>
-            <div>
-                <button class="text-sm text-gray-800 ml-4"><i class="fa-solid fa-plus"></i>Add Experience</button>
+            <div id="partie-experience">
+                <button id="btn-ajouter-experience" class="text-sm text-green-500 ml-4"><i class="fa-solid fa-plus"></i>Add Experience</button>
+                
             </div>
-
-            <div class="flex justify-around">
-                <button id="btn-enregistrer" class="bg-green-500 text-white w-[30%] rounded-md text-sm">Save</button>
-                <button id="btn-quitter" class="bg-red-500 text-white w-[30%] rounded-md text-sm p-1">Cancel</button>
+            
+            <div class="flex justify-around mb-4 mt-2">
+                <button id="btn-enregistrer" class="bg-green-500 text-white w-[25%] p-1 rounded-md text-sm">Save</button>
+                <button id="btn-quitter" class="bg-red-500 text-white w-[25%] rounded-md text-sm p-1">Cancel</button>
             </div>
         </div>
     </div>
+
+
     <script src="general.js"></script>
 </body>
 
