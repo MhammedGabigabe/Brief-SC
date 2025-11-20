@@ -88,16 +88,15 @@
 
     </div>
     <!--Modale add worker-->
-    <div class="fixed inset-0 bg-black/40 flex justify-center items-center">
-        <div id="modaleWorker" class="w-[30%] bg-white px-4 py-2 rounded-xl flex flex-col gap-3">
-            
-                <p class="text-green-500 text-xl font-semibold text-center">Add New Worker</p>
-            
+    <div id="modale-ajout" class="fixed inset-0 bg-black/40 flex justify-center items-center hidden">
+        <div class="w-full max-w-lg bg-white px-4 py-2 rounded-xl flex flex-col gap-3 ">
 
+            <p class="text-green-500 text-xl font-semibold text-center">Add New Worker</p>
             <div class="flex gap-5 w-[100%]">
-                <div class="flex flex-col w-[45%] ml-2">
-                    <label for="name" class="text-sm text-gray-800">Full Name</label>
-                    <input type="text" id="name" class="rounded-md border-2 border-gray p-1 text-sm">
+                <div class="flex flex-col w-[45%] ml-4">
+                    <label for="nom-employe" class="text-sm text-gray-800">Full Name</label>
+                    <input type="text" id="nom-employe" class="rounded-md border-2 border-gray p-1 text-sm">
+                    <p id="para-nom" class="text-red-500 text-xs hidden"></p>
                 </div>
                 <div class="flex flex-col w-[45%]">
                     <label for="role" class="text-sm text-gray-800">Role</label>
@@ -109,30 +108,40 @@
                         <option value="manager">Manager</option>
                         <option value="nettoyage">Cleaning</option>
                     </select>
+                    <p id="para-role" class="text-red-500 text-xs hidden"></p>
                 </div>
             </div>
-            <div class="flex flex-col w-[96%] ml-2">
-                <label for="photo" class="text-sm text-gray-800">Photo(URL)</label>
-                <input type="text" id="photo" class="rounded-md border-2 border-gray p-1 text-sm">
+            <div class="flex w-[90%] ml-4">
+                <div class="flex flex-col w-full">
+                    <label for="photo" class="text-sm text-gray-800">Photo(URL)</label>
+                    <input type="text" id="url-photo" class="rounded-md border-2 border-gray p-1 text-sm">
+                    <p id="para-url" class="text-red-500 text-xs hidden"></p>
+                </div>
+                <img src="worker.png" alt="" class="w-16 h-16">
             </div>
-            <div class="flex gap-5 w-[100%] ml-2">
+            <div class="flex gap-5 w-[100%] ml-4">
                 <div class="flex flex-col w-[45%]">
                     <label for="email" class="text-sm text-gray-800">Email</label>
                     <input type="text" id="email" class="rounded-md border-2 border-gray p-1 text-sm">
+                    <p id="para-email" class="text-red-500 text-xs hidden"></p>
                 </div>
                 <div class="flex flex-col w-[45%]">
                     <label for="phone" class="text-sm text-gray-800">phone number</label>
                     <input type="text" id="phone" class="rounded-md border-2 border-gray p-1 text-sm">
+                    <p id="para-phone" class="text-red-500 text-xs hidden"></p>
                 </div>
             </div>
-            <button class="text-sm text-gray-800"><i class="fa-solid fa-plus"></i>Add Experience</button>
+            <div>
+                <button class="text-sm text-gray-800 ml-4"><i class="fa-solid fa-plus"></i>Add Experience</button>
+            </div>
+
             <div class="flex justify-around">
-                <button class="bg-green-500 text-white w-[35%] rounded-md text-sm">Save</button>
-                <button class="bg-red-500 text-white w-[35%] rounded-md text-sm p-1">Cancel</button>
+                <button id="btn-enregistrer" class="bg-green-500 text-white w-[30%] rounded-md text-sm">Save</button>
+                <button id="btn-quitter" class="bg-red-500 text-white w-[30%] rounded-md text-sm p-1">Cancel</button>
             </div>
         </div>
     </div>
-
+    <script src="general.js"></script>
 </body>
 
 </html>
