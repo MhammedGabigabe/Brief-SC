@@ -242,8 +242,6 @@ function verification_presence_format() {
 
 }
 
-
-
 btn_ajouter_experience.addEventListener('click', () => {
     injecter_element();
 })
@@ -256,9 +254,10 @@ url_photo.addEventListener('input', () => {
         id_photo.src = url_photo.value;
     }
 })
+
 function ajouter_employe() {
     const employe = {
-
+        
     }
 }
 
@@ -299,6 +298,7 @@ btn_quitter.addEventListener('click', () => {
     const experiences_injecter = document.querySelectorAll(".ensemble-experience");
     experiences_injecter.forEach(el => el.remove());
 })
+
 btn_enregistrer.addEventListener('click', () => {
     verification_presence_format();
 })
