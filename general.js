@@ -17,17 +17,44 @@ const para_url = document.getElementById("para-url");
 const para_email = document.getElementById("para-email");
 const para_phone = document.getElementById("para-phone");
 const id_photo = document.getElementById("id-photo");
-const para_entreprise = document.getElementById("para-entreprise");
-const para_poste = document.getElementById("para-poste");
-const para_debut = document.getElementById("para-debut");
-const para_fin = document.getElementById("para-fin");
-
-const nom_entreprise = document.getElementById("nom-entreprise");
 
 const partie_experience = document.getElementById("partie-experience");
 const btn_ajouter_experience = document.getElementById("btn-ajouter-experience");
 
 
+function injecter_element() {
+    //let id_exeprience = 0;
+    const element = document.createElement('div');
+    element.setAttribute("class", "ensemble-experience");
+    //element.setAttribute("id", `experience-${++id_exeprience}`);
+    element.innerHTML = `
+        <div class="flex gap-1 mt-2 w-[100%]">
+          <div class="flex flex-col w-[45%] ml-4">
+            <label for="nom-entreprise" class="text-sm text-gray-800">Entreprise</label>
+            <input type="text" id="nom-entreprise" class="rounded-md border-2 border-gray p-1 text-sm">
+            <p id="para-entreprise" class="text-red-500 text-xs hidden"></p>
+          </div>
+          <div class="flex flex-col w-[45%] ml-4">
+            <label for="poste" class="text-sm text-gray-800">Poste</label>
+            <input type="text" id="poste" class="rounded-md border-2 border-gray p-1 text-sm">
+            <p id="para-poste" class="text-red-500 text-xs hidden"></p>
+          </div>
+        </div>
+        <div class="flex gap-1 mt-2 mb-4 w-[100%]" id="">
+          <div class="flex flex-col w-[45%] ml-4">
+            <label for="date-debut" class="text-sm text-gray-800">Date de début</label>
+            <input type="date" id="date-debut" class="rounded-md border-2 border-gray p-1 text-sm">
+            <p id="para-debut" class="text-red-500 text-xs hidden"></p>
+          </div>
+          <div class="flex flex-col w-[45%] ml-4">
+            <label for="date-fin" class="text-sm text-gray-800">Date de fin</label>
+            <input type="date" id="date-fin" class="rounded-md border-2 border-gray p-1 text-sm">
+            <p id="para-fin" class="text-red-500 text-xs hidden"></p>
+          </div>
+        </div>`;
+    partie_experience.append(element);
+
+}
 
 function verification_presence_format() {
 
@@ -37,6 +64,7 @@ function verification_presence_format() {
     const format_email = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
 
     const format_entreprise = /^(?=.*[a-zA-ZÀ-ÿ])[a-zA-ZÀ-ÿ\s\d]+$/;
+    const format_poste = /^[a-zA-ZÀ-ÿ\s]+$/;
 
     if (nom_employe.value.trim() == "") {
         para_nom.classList.remove('hidden');
@@ -85,63 +113,151 @@ function verification_presence_format() {
         para_email.textContent = "*Format n'est pas valide !!"
     }
 
-    alert("apres de tester");
-    if(format_entreprise.test(nom_entreprise.value)){
-        alert("c bien");
-        para_entreprise.classList.add('hidden');
-    }else{
-        alert("c parfait");
-        para_entreprise.classList.remove('hidden');
-        para_entreprise.textContent = "*Format n'est pas valide !!";
-    }
+    // const para_poste = document.getElementById("para-poste");
+    // const para_debut = document.getElementById("para-debut");
+    // const para_fin = document.getElementById("para-fin");
+    // const para_entreprise = document.getElementById("para-entreprise");
+    // const nom_entreprise = document.getElementById("nom-entreprise");
+    // const poste = document.getElementById("poste");
+    // const date_debut = document.getElementById("date-debut");
+    // const date_fin = document.getElementById("date-fin");
 
-    alert("avant de tester");
+    const experiences_injecter = document.querySelectorAll(".ensemble-experience");
+    const nb_experience = experiences_injecter.length;
+    // alert(document.querySelectorAll(".ensemble-experience"));
+    experiences_injecter.forEach(experience => {
+        
+        let saisi;
+        let cmp = 0;
+        //alert("avant le test1 !!");
+        if (experience.querySelector("#nom-entreprise").value == "" && experience.querySelector("#poste").poste.value == "" && experience.querySelector("#date-debut").date_debut.value == "" && experience.querySelector("#date-fin").date_fin.value == "") {
+            saisi = false;
+            //alert("il n'a pas saisi !!");
+        } else {
+            //alert("il a saisi !!");
+            saisi = true;
+        }
+
+        //alert("avant le test2 !!");
+        while (saisi && cmp < nb_experience) {
+            //alert("dans la boucle de test");
+            if (format_entreprise.test(experience.querySelector("#nom-entreprise").value)) {
+                experience.querySelector("#para-entreprise").classList.add('hidden');
+            } else {
+                experience.querySelector("#para-entreprise").classList.remove('hidden');
+                experience.querySelector("#para-entreprise").textContent = "*Champ obligatoire ou Format n'est pas valide !!";
+            }
+
+            if (format_poste.test(experience.querySelector("#poste").value)) {
+                experience.querySelector("#para-poste").classList.add('hidden');
+            } else {
+                experience.querySelector("#para-poste").classList.remove('hidden');
+                experience.querySelector("#para-poste").textContent = "*Champ obligatoire ou Format n'est pas valide !!";
+            }
+
+            if (experience.querySelector("#date-debut").value == "") {
+                experience.querySelector("#para-debut").classList.remove('hidden');
+                experience.querySelector("#para-debut").textContent = "*Tu doit saisi la date début d'éxpérience !!"
+            } else {
+                experience.querySelector("#para-debut").classList.add('hidden');
+            }
+
+            if (experience.querySelector("#date-fin").value == "") {
+                experience.querySelector("#para-fin").classList.remove('hidden');
+                experience.querySelector("#para-fin").textContent = "*Tu doit saisi la date fin d'éxpérience !!"
+            } else {
+                experience.querySelector("#para-fin").classList.add('hidden');
+            }
+
+            //alert("verifier les dates");
+
+            if (experience.querySelector("#date-debut").value >= experience.querySelector("#date-fin").value) {
+                //alert("bien");
+                if (experience.querySelector("#date-debut").value != "") {
+                    experience.querySelector("#para-debut").classList.remove('hidden');
+                    experience.querySelector("#para-debut").textContent = "*Date début expérience doit étre avant la date fin !!"
+                    //alert("bien2");
+                }
+
+            }
+            cmp++;
+        }
+
+    })
+    // let saisi;
+    // let verifier = false;
+    // alert("avant le test1 !!");
+    // if (nom_entreprise.value == "" && poste.value == "" && date_debut.value == "" && date_fin.value == "") {
+    //     saisi = false;
+    //     alert("il n'a pas saisi !!");
+    // } else {
+    //     alert("il a saisi !!");
+    //     saisi = true;
+    // }
+
+    // alert("avant le test2 !!");
+    // while (saisi && !verifier) {
+    //     alert("dans la boucle de test")
+    //     if (format_entreprise.test(nom_entreprise.value)) {
+    //         para_entreprise.classList.add('hidden');
+    //     } else {
+    //         para_entreprise.classList.remove('hidden');
+    //         para_entreprise.textContent = "*Champ obligatoire ou Format n'est pas valide !!";
+    //     }
+
+    //     if (format_poste.test(poste.value)) {
+    //         para_poste.classList.add('hidden');
+    //     } else {
+    //         para_poste.classList.remove('hidden');
+    //         para_poste.textContent = "*Champ obligatoire ou Format n'est pas valide !!";
+    //     }
+
+    //     if (date_debut.value == "") {
+    //         para_debut.classList.remove('hidden');
+    //         para_debut.textContent = "*Tu doit saisi la date début d'éxpérience !!"
+    //     } else {
+    //         para_debut.classList.add('hidden');
+    //     }
+
+    //     if (date_fin.value == "") {
+    //         para_fin.classList.remove('hidden');
+    //         para_fin.textContent = "*Tu doit saisi la date fin d'éxpérience !!"
+    //     } else {
+    //         para_fin.classList.add('hidden');
+    //     }
+
+    //     alert("verifier les dates");
+
+    //     if (date_debut.value >= date_fin.value) {
+    //         alert("bien");
+    //         if (date_debut.value != "") {
+    //             para_debut.classList.remove('hidden');
+    //             para_debut.textContent = "*Date début expérience doit étre inférieur à la date fin !!"
+    //             alert("bien2");
+    //         }
+
+    //     }
+    //     verifier = true;
+    // }
+
 }
 
-function injecter_element(){
-    const element = document.createElement('div');
-    element.innerHTML =`
-        <div class="flex gap-1 mt-2 w-[100%]">
-          <div class="flex flex-col w-[45%] ml-4">
-            <label for="nom-entreprise" class="text-sm text-gray-800">Entreprise</label>
-            <input type="text" id="nom-entreprise" class="rounded-md border-2 border-gray p-1 text-sm">
-            <p id="para-entreprise" class="text-red-500 text-xs hidden"></p>
-          </div>
-          <div class="flex flex-col w-[45%] ml-4">
-            <label for="poste" class="text-sm text-gray-800">Poste</label>
-            <input type="text" id="poste" class="rounded-md border-2 border-gray p-1 text-sm">
-            <p id="para-poste" class="text-red-500 text-xs hidden"></p>
-          </div>
-        </div>
-        <div class="flex gap-1 mt-2 mb-4 w-[100%]" id="">
-          <div class="flex flex-col w-[45%] ml-4">
-            <label for="date-debut" class="text-sm text-gray-800">Date de début</label>
-            <input type="date" id="date-debut" class="rounded-md border-2 border-gray p-1 text-sm">
-            <p id="para-debut" class="text-red-500 text-xs hidden"></p>
-          </div>
-          <div class="flex flex-col w-[45%] ml-4">
-            <label for="date-fin" class="text-sm text-gray-800">Date de fin</label>
-            <input type="date" id="date-fin" class="rounded-md border-2 border-gray p-1 text-sm">
-            <p id="para-fin" class="text-red-500 text-xs hidden"></p>
-          </div>
-        </div>`;
-    partie_experience.append(element);
-}
 
-btn_ajouter_experience.addEventListener('click', ()=>{
+
+btn_ajouter_experience.addEventListener('click', () => {
     injecter_element();
 })
 
-url_photo.addEventListener('input',()=>{
-    
-    if(url_photo.value ==""){
+url_photo.addEventListener('input', () => {
+
+    if (url_photo.value == "") {
         id_photo.src = "worker.png"
-    }else{
+    } else {
         id_photo.src = url_photo.value;
     }
 })
-function ajouter_employe(){
-    const employe={
+function ajouter_employe() {
+    const employe = {
 
     }
 }
@@ -149,6 +265,7 @@ function ajouter_employe(){
 btn_ajouter.addEventListener('click', () => {
     modale_ajout.classList.remove('hidden');
 })
+
 btn_quitter.addEventListener('click', () => {
     modale_ajout.classList.add('hidden');
     nom_employe.value = "";
@@ -161,6 +278,26 @@ btn_quitter.addEventListener('click', () => {
     para_url.classList.add('hidden');
     para_email.classList.add('hidden');
     para_phone.classList.add('hidden');
+
+    const para_poste = document.getElementById("para-poste");
+    const para_debut = document.getElementById("para-debut");
+    const para_fin = document.getElementById("para-fin");
+    const para_entreprise = document.getElementById("para-entreprise");
+    const nom_entreprise = document.getElementById("nom-entreprise");
+    const poste = document.getElementById("poste");
+    const date_debut = document.getElementById("date-debut");
+    const date_fin = document.getElementById("date-fin");
+    nom_entreprise.value = "";
+    poste.value = "";
+    date_debut.value = "";
+    date_fin.value = "";
+    para_entreprise.classList.add('hidden');
+    para_poste.classList.add('hidden');
+    para_debut.classList.add('hidden');
+    para_fin.classList.add('hidden');
+
+    const experiences_injecter = document.querySelectorAll(".ensemble-experience");
+    experiences_injecter.forEach(el => el.remove());
 })
 btn_enregistrer.addEventListener('click', () => {
     verification_presence_format();

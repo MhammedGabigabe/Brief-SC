@@ -64,8 +64,6 @@
 
         </aside>
 
-
-
         <main class="bg-[#99a1af] flex-1 flex justify-center items-center p-4">
             <div id="grille"
                 class="bg-[url('/bg-bois.png')] grid grid-cols-5 grid-rows-3 w-[95%] border-4 border-black text-[#0f141e] font-medium ">
@@ -88,8 +86,9 @@
 
     </div>
     <!--Modale ajouter employé-->
-    <div id="modale-ajout" class="fixed inset-0 bg-black/40 flex justify-center items-center hidden">
-        <div class="w-full max-w-lg bg-white px-4 py-2 rounded-xl flex flex-col gap-1 ">
+    <div id="modale-ajout" class="fixed inset-0 bg-black/40 flex justify-center items-center hidden ">
+        <div
+            class="w-full max-w-lg bg-white px-4 py-2 rounded-xl flex flex-col gap-1 overflow-y-auto overflow-hidden h-[350px]">
 
             <p class="text-green-500 text-xl font-semibold text-center">Add New Worker</p>
             <div class="flex gap-5 w-[100%]">
@@ -132,13 +131,19 @@
                 </div>
             </div>
             <div id="partie-experience">
-                <button id="btn-ajouter-experience" class="text-sm text-green-500 ml-4"><i class="fa-solid fa-plus"></i>Add Experience</button>
-                
+                <button id="btn-ajouter-experience" class="text-sm text-green-500 ml-4"><i
+                        class="fa-solid fa-plus"></i>Add Experience</button>
+
             </div>
-            
-            <div class="flex justify-around mb-4 mt-2">
-                <button id="btn-enregistrer" class="bg-green-500 text-white w-[25%] p-1 rounded-md text-sm">Save</button>
-                <button id="btn-quitter" class="bg-red-500 text-white w-[25%] rounded-md text-sm p-1">Cancel</button>
+
+            <div class="flex justify-around h-[70px] mb-4 mt-2">
+                <div class="flex justify-center items-center gap-32 w-full">
+                    <button id="btn-enregistrer"
+                        class="bg-green-500 text-white w-[25%] p-1 rounded-md text-sm">Save</button>
+                    <button id="btn-quitter"
+                        class="bg-red-500 text-white w-[25%] rounded-md text-sm p-1">Cancel</button>
+                </div>
+
             </div>
         </div>
     </div>
