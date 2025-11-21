@@ -125,5 +125,5 @@ En cliquant sur un employé, une fiche affiche :
 
 ###  Cloner le projet  
 ```bash
-git clone https://github.com/votre-nom/worksphere.git
-cd worksphere
+git clone https://github.com/MhammedGabigabe/Brief-SC.git
+cd Brief-SC
