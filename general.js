@@ -20,13 +20,59 @@ const id_photo = document.getElementById("id-photo");
 
 const partie_experience = document.getElementById("partie-experience");
 const btn_ajouter_experience = document.getElementById("btn-ajouter-experience");
+//localStorage.clear("employes")
+let liste_employes = [];
+let id_employe = 0;
+let photo = "https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80";
 
+function sauvedarder_employes() {
+    localStorage.setItem("employes", JSON.stringify(liste_employes));
+}
+
+if (localStorage.getItem("employes")) {
+    liste_employes = JSON.parse(localStorage.getItem("employes"));
+    id_employe = liste_employes.length;
+}
+
+function ajouter_employe() {
+
+    alert("dans la fonction insertion")
+    const experiences = [];
+    const experiences_injecter = document.querySelectorAll(".ensemble-experience");
+
+    experiences_injecter.forEach(exp => {
+        const entreprise = exp.querySelector("#nom-entreprise").value;
+        const poste = exp.querySelector("#poste").value;
+        const date_debut = exp.querySelector("#date-debut").value;
+        const date_fin = exp.querySelector("#date-fin").value;
+
+        experiences.push({
+            entreprise_ex: entreprise,
+            poste_ex: poste,
+            date_debut_ex: date_debut,
+            date_fin_ex: date_fin
+        });
+    });
+
+    const employe = {
+        id_em: ++id_employe,
+        nom_prenom_em: nom_employe.value,
+        role_em: liste_role.value,
+        photo_em: photo,
+        email_em: email.value,
+        phone_em: phone.value,
+        experience_em: experiences
+    };
+    liste_employes.push(employe);
+    sauvedarder_employes();
+    alert("fin de fonction!!")
+}
 
 function injecter_element() {
-    //let id_exeprience = 0;
+
     const element = document.createElement('div');
     element.setAttribute("class", "ensemble-experience");
-    //element.setAttribute("id", `experience-${++id_exeprience}`);
+
     element.innerHTML = `
         <div class="flex gap-1 mt-2 w-[100%]">
           <div class="flex flex-col w-[45%] ml-4">
@@ -69,95 +115,93 @@ function verification_presence_format() {
     if (nom_employe.value.trim() == "") {
         para_nom.classList.remove('hidden');
         para_nom.textContent = "*Champ obligatoire !!";
+        return;
     } else if (format_nom.test(nom_employe.value)) {
         para_nom.classList.add('hidden');
     } else {
         para_nom.classList.remove('hidden');
-        para_nom.textContent = "*Format n'est pas valide !!"
-    }
-
-    if (url_photo.value == "") {
-        para_url.classList.remove('hidden');
-        para_url.textContent = "*Champ obligatoire !!";
-    } else if (format_url.test(url_photo.value)) {
-        para_url.classList.add('hidden');
-    } else {
-        para_url.classList.remove('hidden');
-        para_url.textContent = "*Format n'est pas valide !!"
+        para_nom.textContent = "*Format invalide !!"
+        return;
     }
 
     if (liste_role.value == "") {
         para_role.classList.remove('hidden');
         para_role.textContent = "*Tu doit choisi un rôle !!";
+        return;
     } else {
         para_role.classList.add('hidden');
     }
 
+    if (url_photo.value) {
+        if (format_url.test(url_photo.value)) {
+            para_url.classList.add("hidden");
+            photo = url_photo.value;
+        } else {
+            para_url.classList.remove("hidden");
+            para_url.textContent = "*Format invalive !!"
+            return;
+        }
+    }
+
+
     if (phone.value == "") {
         para_phone.classList.remove('hidden');
         para_phone.textContent = "*Champ obligatoire";
+        return;
     } else if (format_telephone.test(phone.value)) {
         para_phone.classList.add('hidden');
     } else {
         para_phone.classList.remove('hidden');
-        para_phone.textContent = "*Format n'est pas valide !!"
+        para_phone.textContent = "*Format invalide !!"
+        return;
     }
 
     if (email.value == "") {
         para_email.classList.remove('hidden');
         para_email.textContent = "*Champ obligatoire";
+        return;
     } else if (format_email.test(email.value)) {
         para_email.classList.add('hidden');
     } else {
         para_email.classList.remove('hidden');
-        para_email.textContent = "*Format n'est pas valide !!"
+        para_email.textContent = "*Format invalide !!"
+        return;
     }
-
-    // const para_poste = document.getElementById("para-poste");
-    // const para_debut = document.getElementById("para-debut");
-    // const para_fin = document.getElementById("para-fin");
-    // const para_entreprise = document.getElementById("para-entreprise");
-    // const nom_entreprise = document.getElementById("nom-entreprise");
-    // const poste = document.getElementById("poste");
-    // const date_debut = document.getElementById("date-debut");
-    // const date_fin = document.getElementById("date-fin");
 
     const experiences_injecter = document.querySelectorAll(".ensemble-experience");
     const nb_experience = experiences_injecter.length;
-    // alert(document.querySelectorAll(".ensemble-experience"));
+
     experiences_injecter.forEach(experience => {
-        
+
         let saisi;
         let cmp = 0;
-        //alert("avant le test1 !!");
-        if (experience.querySelector("#nom-entreprise").value == "" && experience.querySelector("#poste").poste.value == "" && experience.querySelector("#date-debut").date_debut.value == "" && experience.querySelector("#date-fin").date_fin.value == "") {
+        if (experience.querySelector("#nom-entreprise").value == "" && experience.querySelector("#poste").value == "" && experience.querySelector("#date-debut").date_debut.value == "" && experience.querySelector("#date-fin").date_fin.value == "") {
             saisi = false;
-            //alert("il n'a pas saisi !!");
         } else {
-            //alert("il a saisi !!");
             saisi = true;
         }
 
-        //alert("avant le test2 !!");
         while (saisi && cmp < nb_experience) {
-            //alert("dans la boucle de test");
             if (format_entreprise.test(experience.querySelector("#nom-entreprise").value)) {
                 experience.querySelector("#para-entreprise").classList.add('hidden');
             } else {
                 experience.querySelector("#para-entreprise").classList.remove('hidden');
-                experience.querySelector("#para-entreprise").textContent = "*Champ obligatoire ou Format n'est pas valide !!";
+                experience.querySelector("#para-entreprise").textContent = "*Champ obligatoire ou Format invalide !!";
+                return;
             }
 
             if (format_poste.test(experience.querySelector("#poste").value)) {
                 experience.querySelector("#para-poste").classList.add('hidden');
             } else {
                 experience.querySelector("#para-poste").classList.remove('hidden');
-                experience.querySelector("#para-poste").textContent = "*Champ obligatoire ou Format n'est pas valide !!";
+                experience.querySelector("#para-poste").textContent = "*Champ obligatoire ou Format invalide !!";
+                return;
             }
 
             if (experience.querySelector("#date-debut").value == "") {
                 experience.querySelector("#para-debut").classList.remove('hidden');
                 experience.querySelector("#para-debut").textContent = "*Tu doit saisi la date début d'éxpérience !!"
+                return;
             } else {
                 experience.querySelector("#para-debut").classList.add('hidden');
             }
@@ -165,81 +209,23 @@ function verification_presence_format() {
             if (experience.querySelector("#date-fin").value == "") {
                 experience.querySelector("#para-fin").classList.remove('hidden');
                 experience.querySelector("#para-fin").textContent = "*Tu doit saisi la date fin d'éxpérience !!"
+                return;
             } else {
                 experience.querySelector("#para-fin").classList.add('hidden');
             }
 
-            //alert("verifier les dates");
-
             if (experience.querySelector("#date-debut").value >= experience.querySelector("#date-fin").value) {
-                //alert("bien");
                 if (experience.querySelector("#date-debut").value != "") {
                     experience.querySelector("#para-debut").classList.remove('hidden');
                     experience.querySelector("#para-debut").textContent = "*Date début expérience doit étre avant la date fin !!"
-                    //alert("bien2");
+                    return;
                 }
-
             }
             cmp++;
         }
-
     })
-    // let saisi;
-    // let verifier = false;
-    // alert("avant le test1 !!");
-    // if (nom_entreprise.value == "" && poste.value == "" && date_debut.value == "" && date_fin.value == "") {
-    //     saisi = false;
-    //     alert("il n'a pas saisi !!");
-    // } else {
-    //     alert("il a saisi !!");
-    //     saisi = true;
-    // }
-
-    // alert("avant le test2 !!");
-    // while (saisi && !verifier) {
-    //     alert("dans la boucle de test")
-    //     if (format_entreprise.test(nom_entreprise.value)) {
-    //         para_entreprise.classList.add('hidden');
-    //     } else {
-    //         para_entreprise.classList.remove('hidden');
-    //         para_entreprise.textContent = "*Champ obligatoire ou Format n'est pas valide !!";
-    //     }
-
-    //     if (format_poste.test(poste.value)) {
-    //         para_poste.classList.add('hidden');
-    //     } else {
-    //         para_poste.classList.remove('hidden');
-    //         para_poste.textContent = "*Champ obligatoire ou Format n'est pas valide !!";
-    //     }
-
-    //     if (date_debut.value == "") {
-    //         para_debut.classList.remove('hidden');
-    //         para_debut.textContent = "*Tu doit saisi la date début d'éxpérience !!"
-    //     } else {
-    //         para_debut.classList.add('hidden');
-    //     }
-
-    //     if (date_fin.value == "") {
-    //         para_fin.classList.remove('hidden');
-    //         para_fin.textContent = "*Tu doit saisi la date fin d'éxpérience !!"
-    //     } else {
-    //         para_fin.classList.add('hidden');
-    //     }
-
-    //     alert("verifier les dates");
-
-    //     if (date_debut.value >= date_fin.value) {
-    //         alert("bien");
-    //         if (date_debut.value != "") {
-    //             para_debut.classList.remove('hidden');
-    //             para_debut.textContent = "*Date début expérience doit étre inférieur à la date fin !!"
-    //             alert("bien2");
-    //         }
-
-    //     }
-    //     verifier = true;
-    // }
-
+    alert("avant insertion")
+    ajouter_employe();
 }
 
 btn_ajouter_experience.addEventListener('click', () => {
@@ -249,17 +235,12 @@ btn_ajouter_experience.addEventListener('click', () => {
 url_photo.addEventListener('input', () => {
 
     if (url_photo.value == "") {
-        id_photo.src = "worker.png"
+        id_photo.src = photo;
+        para_url.classList.add("hidden");
     } else {
         id_photo.src = url_photo.value;
     }
 })
-
-function ajouter_employe() {
-    const employe = {
-        
-    }
-}
 
 btn_ajouter.addEventListener('click', () => {
     modale_ajout.classList.remove('hidden');
@@ -270,6 +251,7 @@ btn_quitter.addEventListener('click', () => {
     nom_employe.value = "";
     liste_role.value = "";
     url_photo.value = "";
+    id_photo.src = "worker.png"
     email.value = "";
     phone.value = "";
     para_nom.classList.add('hidden');
@@ -298,7 +280,6 @@ btn_quitter.addEventListener('click', () => {
     const experiences_injecter = document.querySelectorAll(".ensemble-experience");
     experiences_injecter.forEach(el => el.remove());
 })
-
 btn_enregistrer.addEventListener('click', () => {
     verification_presence_format();
 })
