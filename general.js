@@ -25,20 +25,40 @@ let liste_employes = [];
 let id_employe = 0;
 let photo = "https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80";
 
+let donnees_stockees = localStorage.getItem("employes");
+
+
 function sauvedarder_employes() {
     localStorage.setItem("employes", JSON.stringify(liste_employes));
 }
 
-if (localStorage.getItem("employes")) {
-    liste_employes = JSON.parse(localStorage.getItem("employes"));
+if (donnees_stockees) {
+    liste_employes = JSON.parse(donnees_stockees);
     id_employe = liste_employes.length;
+    afficher_employes_non_assignes();
+}
+
+function afficher_employes_non_assignes() {
+    const employe_non_assignes = document.getElementById("employes-non-assignes");
+    liste_employes.forEach(emp => {
+        const element_employe = document.createElement("div");
+        element_employe.className = "flex items-center gap-3 bg-gray-100 rounded-xl px-2 shrink-0 md:shrink w-52 h-12 md:w-60 md:ml-2";
+        element_employe.innerHTML = `
+            <img src="${emp.photo_em}"
+                alt="profil" class="w-12 h-12 rounded-full object-cover">
+            <div>
+                <p class="text-[#1e2939] text-xs">${emp.nom_prenom_em}</p>
+                <p class="text-[#99a1af] text-xs font-light">${emp.role_em}</p>
+            </div>`;
+        employe_non_assignes.append(element_employe);
+    });
 }
 
 function ajouter_employe() {
 
-    alert("dans la fonction insertion")
+    // alert("dans la fonction insertion")
     const experiences = [];
-    const experiences_injecter = document.querySelectorAll(".ensemble-experience");
+    const experiences_injecter = document.querySelectorAll(".liste-experience");
 
     experiences_injecter.forEach(exp => {
         const entreprise = exp.querySelector("#nom-entreprise").value;
@@ -61,17 +81,17 @@ function ajouter_employe() {
         photo_em: photo,
         email_em: email.value,
         phone_em: phone.value,
-        experience_em: experiences
+        experiences_em: experiences
     };
     liste_employes.push(employe);
     sauvedarder_employes();
-    alert("insertion a été effectué!!")
+    // alert("insertion a été effectué!!")
 }
 
-function injecter_element() {
+function injecter_experience() {
 
     const element = document.createElement('div');
-    element.setAttribute("class", "ensemble-experience");
+    element.setAttribute("class", "liste-experience");
 
     element.innerHTML = `
         <div class="flex gap-1 mt-2 w-[100%]">
@@ -171,7 +191,7 @@ function verification_presence_format() {
     }
 
     // alert("avant selectione les experiences !!")
-    const experiences_injecter = document.querySelectorAll(".ensemble-experience");
+    const experiences_injecter = document.querySelectorAll(".liste-experience");
     const nb_experience = experiences_injecter.length;
     // alert(nb_experience)
 
@@ -236,9 +256,9 @@ function verification_presence_format() {
             cmp++;
         }
         if (!experience_isValid) {
-        //alert("experience invalid il faut sortie de la boucle 1 et 2 !!");
-        return;
-    }
+            //alert("experience invalid il faut sortie de la boucle 1 et 2 !!");
+            return;
+        }
     })
     if (!experience_isValid) {
         //alert("format experience invalid !!");
@@ -250,7 +270,7 @@ function verification_presence_format() {
 }
 
 btn_ajouter_experience.addEventListener('click', () => {
-    injecter_element();
+    injecter_experience();
 })
 
 url_photo.addEventListener('input', () => {
@@ -299,7 +319,7 @@ btn_quitter.addEventListener('click', () => {
     para_debut.classList.add('hidden');
     para_fin.classList.add('hidden');
 
-    const experiences_injecter = document.querySelectorAll(".ensemble-experience");
+    const experiences_injecter = document.querySelectorAll(".liste-experience");
     experiences_injecter.forEach(el => el.remove());
 })
 btn_enregistrer.addEventListener('click', () => {
