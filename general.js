@@ -20,10 +20,12 @@ const id_photo = document.getElementById("id-photo");
 
 const partie_experience = document.getElementById("partie-experience");
 const btn_ajouter_experience = document.getElementById("btn-ajouter-experience");
-//localStorage.clear("employes")
+// localStorage.clear("employes")
 let liste_employes = [];
 let id_employe = 0;
 let photo = "https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80";
+
+let experience_ajouter = false;
 
 let donnees_stockees = localStorage.getItem("employes");
 
@@ -42,15 +44,15 @@ function afficher_employes_non_assignes() {
     const employe_non_assignes = document.getElementById("employes-non-assignes");
     liste_employes.forEach(emp => {
         const element_employe = document.createElement("div");
-        element_employe.className = "flex items-center gap-3 bg-gray-100 rounded-xl px-2 shrink-0 md:shrink w-52 h-12 md:w-60 md:ml-2";
+        element_employe.className = "flex items-center gap-3 bg-gray-100 rounded-xl overflow-hidden shrink-0 md:shrink w-52 h-12 md:w-60 md:ml-2";
         element_employe.innerHTML = `
             <img src="${emp.photo_em}"
-                alt="profil" class="w-12 h-12 rounded-full object-cover">
+                alt="profil" class="w-12 h-12 rounded-r-full object-cover">
             <div>
                 <p class="text-[#1e2939] text-xs">${emp.nom_prenom_em}</p>
                 <p class="text-[#99a1af] text-xs font-light">${emp.role_em}</p>
             </div>`;
-        employe_non_assignes.append(element_employe);
+        employe_non_assignes.prepend(element_employe);
     });
 }
 
@@ -119,6 +121,49 @@ function injecter_experience() {
           </div>
         </div>`;
     partie_experience.append(element);
+
+}
+
+function vider_champs() {
+    //alert("dans le vide")
+    modale_ajout.classList.add('hidden');
+    nom_employe.value = "";
+    liste_role.value = "";
+    url_photo.value = "";
+    id_photo.src = "worker.png"
+    email.value = "";
+    phone.value = "";
+    para_nom.classList.add('hidden');
+    para_role.classList.add('hidden');
+    para_url.classList.add('hidden');
+    para_email.classList.add('hidden');
+    para_phone.classList.add('hidden');
+    // alert("dans le vide1")
+    const para_poste = document.getElementById("para-poste");
+    const para_debut = document.getElementById("para-debut");
+    const para_fin = document.getElementById("para-fin");
+    const para_entreprise = document.getElementById("para-entreprise");
+    const nom_entreprise = document.getElementById("nom-entreprise");
+    const poste = document.getElementById("poste");
+    const date_debut = document.getElementById("date-debut");
+    const date_fin = document.getElementById("date-fin");
+    // alert("dans le vide2")
+    if (experience_ajouter) {
+        nom_entreprise.value = "";
+        // alert("dans le vide3")
+        poste.value = "";
+        date_debut.value = "";
+        date_fin.value = "";
+
+        para_entreprise.classList.add('hidden');
+        para_poste.classList.add('hidden');
+        para_debut.classList.add('hidden');
+        para_fin.classList.add('hidden');
+        // alert("tout est bien1")
+        const experiences_injecter = document.querySelectorAll(".liste-experience");
+        experiences_injecter.forEach(el => el.remove());
+        // alert("tout est bien2")
+    }
 
 }
 
@@ -200,7 +245,7 @@ function verification_presence_format() {
 
         //let saisi;
         let cmp = 0;
-        alert("avant validation experience");
+        //alert("avant validation experience");
         // if (experience.querySelector("#nom-entreprise").value.trim() == "" && experience.querySelector("#poste").value.trim() == ""
         //     && experience.querySelector("#date-debut").value.trim() == "" && experience.querySelector("#date-fin").value.trim() == "") {
         //     saisi = false;
@@ -212,7 +257,7 @@ function verification_presence_format() {
 
         while (cmp < nb_experience && experience_isValid == true) {
             // alert("avant validation d entreprise");
-            if (format_entreprise.test(experience.querySelector("#nom-entreprise").value)) {
+            if (format_entreprise.test(experience.querySelector("#nom-entreprise").value.trim())) {
                 // alert(" entreprise correct");
                 experience.querySelector("#para-entreprise").classList.add('hidden');
             } else {
@@ -222,7 +267,7 @@ function verification_presence_format() {
                 experience_isValid = false;
             }
 
-            if (format_poste.test(experience.querySelector("#poste").value)) {
+            if (format_poste.test(experience.querySelector("#poste").value.trim())) {
                 experience.querySelector("#para-poste").classList.add('hidden');
             } else {
                 experience.querySelector("#para-poste").classList.remove('hidden');
@@ -246,7 +291,8 @@ function verification_presence_format() {
                 experience.querySelector("#para-fin").classList.add('hidden');
             }
 
-            if (experience.querySelector("#date-debut").value >= experience.querySelector("#date-fin").value) {
+            if (experience.querySelector("#date-fin").value && experience.querySelector("#date-debut").value
+                && experience.querySelector("#date-debut").value >= experience.querySelector("#date-fin").value) {
                 if (experience.querySelector("#date-debut").value != "") {
                     experience.querySelector("#para-debut").classList.remove('hidden');
                     experience.querySelector("#para-debut").textContent = "*Date début expérience doit étre avant la date fin !!"
@@ -260,17 +306,23 @@ function verification_presence_format() {
             return;
         }
     })
+
     if (!experience_isValid) {
         //alert("format experience invalid !!");
         return;
     }
 
-    //alert("validation correct avant insertion")
+    // alert("validation correct avant insertion")
     ajouter_employe();
+    // alert("vieder les champs !!")
+    vider_champs();
+    // alert("avant refresh")
+    location.reload();
 }
 
 btn_ajouter_experience.addEventListener('click', () => {
     injecter_experience();
+    experience_ajouter = true;
 })
 
 url_photo.addEventListener('input', () => {
@@ -289,38 +341,7 @@ btn_ajouter.addEventListener('click', () => {
 })
 
 btn_quitter.addEventListener('click', () => {
-    modale_ajout.classList.add('hidden');
-    nom_employe.value = "";
-    liste_role.value = "";
-    url_photo.value = "";
-    id_photo.src = "worker.png"
-    email.value = "";
-    phone.value = "";
-    para_nom.classList.add('hidden');
-    para_role.classList.add('hidden');
-    para_url.classList.add('hidden');
-    para_email.classList.add('hidden');
-    para_phone.classList.add('hidden');
-
-    const para_poste = document.getElementById("para-poste");
-    const para_debut = document.getElementById("para-debut");
-    const para_fin = document.getElementById("para-fin");
-    const para_entreprise = document.getElementById("para-entreprise");
-    const nom_entreprise = document.getElementById("nom-entreprise");
-    const poste = document.getElementById("poste");
-    const date_debut = document.getElementById("date-debut");
-    const date_fin = document.getElementById("date-fin");
-    nom_entreprise.value = "";
-    poste.value = "";
-    date_debut.value = "";
-    date_fin.value = "";
-    para_entreprise.classList.add('hidden');
-    para_poste.classList.add('hidden');
-    para_debut.classList.add('hidden');
-    para_fin.classList.add('hidden');
-
-    const experiences_injecter = document.querySelectorAll(".liste-experience");
-    experiences_injecter.forEach(el => el.remove());
+    vider_champs();
 })
 btn_enregistrer.addEventListener('click', () => {
     verification_presence_format();
