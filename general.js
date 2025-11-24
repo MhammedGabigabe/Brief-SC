@@ -21,6 +21,13 @@ const id_photo = document.getElementById("id-photo");
 const partie_experience = document.getElementById("partie-experience");
 const btn_ajouter_experience = document.getElementById("btn-ajouter-experience");
 
+const btn_staff = document.getElementById("staff");
+const btn_reception = document.getElementById("reception");
+const btn_security = document.getElementById("security");
+const btn_conference = document.getElementById("conference");
+const btn_archives = document.getElementById("archives");
+const btn_server = document.getElementById("server");
+
 // localStorage.clear("employes")
 let liste_employes = [];
 let id_employe = 0;
@@ -40,6 +47,34 @@ if (donnees_stockees) {
     id_employe = liste_employes.length;
     afficher_employes_non_assignes();
 }
+
+// function afficher_employes_eligibles(roles){
+//     let liste_employes_elegibles = null;
+//     for(let i=0; i< liste_employes.length; i++){
+//         if(liste_employes[i].role_em)
+//     }
+// }
+function restrictions_zone(zone){
+    const roles_eligibles = [];
+    const modale_eligible = document.getElementById("modale-eligible");
+    modale_eligible.classList.remove('hidden');
+    modale_eligible.innerHTML = '';
+    modale_eligible.innerHTML = `
+        <div class="bg-white p-4 rounded-lg flex flex-col justify-center items-center">
+            <p class="text-xl text-red-600"> Y a pas des employés éligibles</p>
+            <button id="close-eligible" class="text-white bg-red-600 rounded-lg py-1 px-4"> Close </button>
+        </div>`
+    if(zone == "staff" || zone == "conference"){
+        modale_eligible.innerHTML = '';
+        roles_eligibles = ["Receptionists","IT Technicians","Security guards","Manager","Cleaning"];
+        afficher_employes_eligibles(roles_eligibles);
+    }    
+    const btn_close = document.getElementById("close-eligible");  
+    btn_close.addEventListener('click', ()=>{
+        modale_eligible.classList.add('hidden');
+    }); 
+}
+
 
 function afficher_details_employe(employe) {
     const container_details = document.getElementById("modale-details");
@@ -86,7 +121,6 @@ function afficher_details_employe(employe) {
         container_details.classList.add('hidden');
     });
 }
-
 
 function afficher_employes_non_assignes() {
     const employe_non_assignes = document.getElementById("employes-non-assignes");
@@ -387,6 +421,37 @@ btn_ajouter.addEventListener('click', () => {
 btn_quitter.addEventListener('click', () => {
     vider_champs();
 })
+
 btn_enregistrer.addEventListener('click', () => {
     verification_presence_format();
 })
+
+btn_staff.addEventListener('click', ()=>{
+    const zone = "staff";
+    restrictions_zone(zone);
+});
+
+btn_reception.addEventListener('click', ()=>{
+    const zone = "reception";
+    restrictions_zone(zone);
+});
+
+btn_security.addEventListener('click', ()=>{
+    const zone = "security";
+    restrictions_zone(zone);
+});
+
+btn_conference.addEventListener('click', ()=>{
+    const zone = "conference";
+    restrictions_zone(zone);
+});
+
+btn_archives.addEventListener('click', ()=>{
+    const zone = "archives";
+    restrictions_zone(zone);
+});
+
+btn_server.addEventListener('click', ()=>{
+    const zone = "server";
+    restrictions_zone(zone);
+});

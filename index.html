@@ -21,7 +21,8 @@
                 unassigned Staff
             </p>
 
-            <div id="employes-non-assignes" class="overflow-x-auto md:overflow-auto flex md:flex-col gap-2">
+            <div id="employes-non-assignes"
+                class="overflow-x-auto md:overflow-y-auto h-20 md:h-[600px] flex md:flex-col gap-2">
 
             </div>
             <div class="flex justify-center md:sticky md:bottom-0">
@@ -33,20 +34,26 @@
 
         <main class="bg-gray-200 flex-1 flex justify-center items-center p-4">
             <div id="grille"
-                class="bg-[url('/bg-bois.png')] grid grid-cols-5 grid-rows-3 w-[95%] border-4 border-black text-[#0f141e] font-medium ">
-                <div class="border-r-4 border-b-4 border-black col-span-2 h-44 flex items-center justify-center">Staff
-                    room</div>
-                <div class="border-l-4 border-b-4 border-black col-start-4 h-44 flex items-center justify-center">
-                    Reception</div>
-                <div class="border-l-4 border-b-4 border-black h-44 flex items-center justify-center">Security room
+                class="bg-[url('/bg-bois.png')] grid grid-cols-5 grid-rows-3 w-[95%] border-4 border-black text-[#0f141e] text-xs md:text-lg md:font-medium ">
+                <div class="border-r-4 border-b-4 border-black col-span-2 h-44 flex items-center justify-center gap-2">
+                    Staff
+                    room<span id="staff" class="text-2xl text-green-600 cursor-pointer">+</span></div>
+                <div class="border-l-4 border-b-4 border-black col-start-4 h-44 flex items-center justify-center gap-2">
+                    Reception<span id="reception" class="text-2xl text-green-600 cursor-pointer">+</span></div>
+                <div class="border-l-4 border-b-4 border-black h-44 flex items-center justify-center gap-2">Security
+                    room
+                    <span id="security" class="text-2xl text-green-600 cursor-pointer">+</span> <br class="md:hidden">
                 </div>
-                <div class="border-r-4 border-black col-span-2 row-span-2 h-auto flex items-center justify-center">
-                    Conference room</div>
                 <div
-                    class="border-t-4 border-r-4 border-l-4 col-start-4 row-start-3 border-black h-44 flex items-center justify-center">
-                    Archives <br class="md:hidden"> Room</div>
-                <div class="border-t-4 border-black col-start-5 row-start-3 flex items-center justify-center">Server
-                    room</div>
+                    class="border-r-4 border-black col-span-2 row-span-2 h-auto flex items-center justify-center gap-2">
+                    Conference room<span id="conference" class="text-2xl text-green-600 cursor-pointer">+</span></div>
+                <div
+                    class="border-t-4 border-r-4 border-l-4 col-start-4 row-start-3 border-black h-44 flex items-center justify-center gap-2">
+                    Archives room<span id="archives" class="text-2xl text-green-600 cursor-pointer">+</span> <br
+                        class="md:hidden"></div>
+                <div class="border-t-4 border-black col-start-5 row-start-3 flex items-center justify-center gap-2">
+                    Server
+                    room<span id="server" class="text-2xl text-green-600 cursor-pointer">+</span></div>
             </div>
         </main>
 
@@ -55,8 +62,7 @@
 
     <!--Modale ajouter employé-->
     <div id="modale-ajout" class="fixed inset-0 bg-black/40 flex justify-center items-center hidden ">
-        <div
-            class="w-full max-w-lg bg-white px-4 py-2 rounded-xl flex flex-col gap-1  h-[350px]">
+        <div class="w-full max-w-lg bg-white px-4 py-2 rounded-xl flex flex-col gap-1  h-[350px]">
 
             <p class="text-green-500 text-xl font-semibold text-center mb-4">Add New Worker</p>
             <div class="overflow-y-auto  overflow-hidden h-[90%]">
@@ -121,6 +127,11 @@
 
     <!--Modale détails employe-->
     <div id="modale-details" class="fixed inset-0 bg-black/40 flex justify-center items-center hidden">
+
+    </div>
+
+    <!--Modale employés éligibles-->
+    <div id="modale-eligible" class="fixed inset-0 bg-black/40 flex justify-center items-center hidden">
 
     </div>
 
