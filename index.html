@@ -35,25 +35,63 @@
         <main class="bg-gray-200 flex-1 flex justify-center items-center p-4">
             <div id="grille"
                 class="bg-[url('/bg-bois.png')] grid grid-cols-5 grid-rows-3 w-[95%] border-4 border-black text-[#0f141e] text-xs md:text-lg md:font-medium ">
-                <div class="border-r-4 border-b-4 border-black col-span-2 h-44 flex items-center justify-center gap-2">
-                    Staff
-                    room<span id="staff" class="text-2xl text-green-600 cursor-pointer">+</span></div>
-                <div class="border-l-4 border-b-4 border-black col-start-4 h-44 flex items-center justify-center gap-2">
-                    Reception<span id="reception" class="text-2xl text-green-600 cursor-pointer">+</span></div>
-                <div class="border-l-4 border-b-4 border-black h-44 flex items-center justify-center gap-2">Security
-                    room
-                    <span id="security" class="text-2xl text-green-600 cursor-pointer">+</span> <br class="md:hidden">
+                <div class="col-span-2  h-44 border-r-4 border-b-4 border-black">
+                    <div id="container-staff" class="grid grid-cols-2">
+
+                    </div>
+                    <div class="flex items-end justify-center gap-2 h-full">
+                        Staff room<span id="staff" class="text-2xl text-green-600 cursor-pointer">+</span>
+                    </div>
                 </div>
-                <div
-                    class="border-r-4 border-black col-span-2 row-span-2 h-auto flex items-center justify-center gap-2">
-                    Conference room<span id="conference" class="text-2xl text-green-600 cursor-pointer">+</span></div>
-                <div
-                    class="border-t-4 border-r-4 border-l-4 col-start-4 row-start-3 border-black h-44 flex items-center justify-center gap-2">
-                    Archives room<span id="archives" class="text-2xl text-green-600 cursor-pointer">+</span> <br
-                        class="md:hidden"></div>
-                <div class="border-t-4 border-black col-start-5 row-start-3 flex items-center justify-center gap-2">
-                    Server
-                    room<span id="server" class="text-2xl text-green-600 cursor-pointer">+</span></div>
+
+                <div class="border-l-4 border-b-4 border-black col-start-4 h-44 ">
+                    <div id="container-reception" class="">
+
+                    </div>
+                    <div class="flex items-end justify-center gap-2 h-full">
+                        Reception<span id="reception" class="text-2xl text-green-600 cursor-pointer">+</span>
+                    </div>
+                </div>
+
+                <div class="border-l-4 border-b-4 border-black h-44">
+                    <div id="container-security" class="">
+
+                    </div>
+                    <div class="flex items-end justify-center gap-2 h-full">Security
+                        room
+                        <span id="security" class="text-2xl text-green-600 cursor-pointer">+</span>
+                        <br class="md:hidden">
+                    </div>
+                </div>
+
+                <div class="border-r-4 border-black col-span-2 row-span-2 h-auto ">
+                    <div id="container-conference" class="grid grid-cols-2">
+
+                    </div>
+                    <div class="flex items-end justify-center gap-2 h-full">
+                        Conference room<span id="conference" class="text-2xl text-green-600 cursor-pointer">+</span>
+                    </div>
+                </div>
+
+                <div class="border-t-4 border-r-4 border-l-4 col-start-4 row-start-3 border-black h-44 ">
+                    <div id="container-archives">
+
+                    </div>
+                    <div class="flex items-end justify-center gap-2 h-full">
+                        Archives room<span id="archives" class="text-2xl text-green-600 cursor-pointer">+</span> <br
+                            class="md:hidden">
+                    </div>
+                </div>
+
+                <div class="border-t-4 border-black col-start-5 row-start-3">
+                    <div  id="contanair-server">
+
+                    </div>
+                    <div class=" flex items-end justify-center gap-2 h-full">
+                    Server room<span id="server" class="text-2xl text-green-600 cursor-pointer">+</span>
+                </div>
+                </div>
+                
             </div>
         </main>
 

@@ -36,47 +36,47 @@ let photo = "https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blan
 let experience_ajouter = false;
 let donnees_stockees = localStorage.getItem("employes");
 
-const restrictions_zone = [{
-    zone_id: 1,
-    zone_name: "conference",
-    roles_eligibles: ["Receptionists", "IT Technicians", "Security guards", "Manager", "Cleaning"],
-    nombre_limite: 10,
-    employes_assignes: []
+const zone = [{
+    id_z: 4,
+    name_z: "conference room",
+    roles_eligibles_z: ["Receptionists", "IT Technicians", "Security guards", "Manager", "Cleaning"],
+    nombre_limite_z: 6,
+    employes_eligibles_z: []
 },
 {
-    zone_id: 2,
-    zone_name: "staff",
-    roles_eligibles: ["Receptionists", "IT Technicians", "Security guards", "Manager", "Cleaning"],
-    nombre_limite: 6,
-    employes_assignes: []
+    id_z: 1,
+    name_z: "staff room",
+    roles_eligibles_z: ["Receptionists", "IT Technicians", "Security guards", "Manager", "Cleaning"],
+    nombre_limite_z: 4,
+    employes_eligibles_z: []
 },
 {
-    zone_id: 3,
-    zone_name: "reception",
-    roles_eligibles: ["Receptionists","Manager","Cleaning"],
-    nombre_limite: 2,
-    employes_assignes: []
+    id_z: 2,
+    name_z: "reception",
+    roles_eligibles_z: ["Receptionists", "Manager", "Cleaning"],
+    nombre_limite_z: 2,
+    employes_eligibles_z: []
 },
 {
-    zone_id: 4,
-    zone_name: "security",
-    roles_eligibles: ["Security guards", "Manager", "Cleaning"],
-    nombre_limite: 2,
-    employes_assignes: []
+    id_z: 3,
+    name_z: "security room",
+    roles_eligibles_z: ["Security guards", "Manager", "Cleaning"],
+    nombre_limite_z: 2,
+    employes_eligibles_z: []
 },
 {
-    zone_id: 5,
-    zone_name: "server",
-    roles_eligibles: ["IT Technicians", "Manager", "Cleaning"],
-    nombre_limite: 2,
-    employes_assignes: []
+    id_z: 6,
+    name_z: "server room",
+    roles_eligibles_z: ["IT Technicians", "Manager", "Cleaning"],
+    nombre_limite_z: 2,
+    employes_eligibles_z: []
 },
 {
-    zone_id: 6,
-    zone_name: "archives",
-    roles_eligibles: ["Receptionists", "IT Technicians", "Security guards", "Manager"],
-    nombre_limite: 2,
-    employes_assignes: []
+    id_z: 5,
+    name_z: "archives room",
+    roles_eligibles_z: ["Receptionists", "IT Technicians", "Security guards", "Manager"],
+    nombre_limite_z: 2,
+    employes_eligibles_z: []
 }]
 
 
@@ -90,30 +90,53 @@ if (donnees_stockees) {
     afficher_employes_non_assignes();
 }
 
-// function afficher_employes_eligibles(roles){
-//     let liste_employes_elegibles = null;
-//     for(let i=0; i< liste_employes.length; i++){
-//         if(liste_employes[i].role_em)
-//     }
-// }
-function restrictions_zone(zone) {
-    // const roles_eligibles = [];
-    const modale_eligible = document.getElementById("modale-eligible");
-    modale_eligible.classList.remove('hidden');
-    modale_eligible.innerHTML = '';
-    modale_eligible.innerHTML = `
+function restriction_zone(id_zo, id_container_zo) {
+
+    const modale_eligibles = document.getElementById("modale-eligible");
+    modale_eligibles.classList.remove('hidden');
+    modale_eligibles.innerHTML = '';
+
+    const zone_a_clique = zone.find(obj => obj.id_z === id_zo);
+    zone_a_clique.employes_eligibles_z = [];
+
+    for (let i = 0; i < liste_employes.length; i++) {
+        if (zone_a_clique.roles_eligibles_z.includes(liste_employes[i].role_em)) {
+            zone_a_clique.employes_eligibles_z.push(liste_employes[i]);
+        }
+    }
+    if (zone_a_clique.employes_eligibles_z.length > 0) {
+
+        const container_emp_elegibles = document.createElement("div");
+        container_emp_elegibles.className = "bg-white p-4 rounded-lg flex flex-col gap-3 justify-center items-center"
+        // container_emp_elegibles.innerHTML = '';
+        container_emp_elegibles.innerHTML = `
+            <button id="close-eligible" class="text-white bg-red-600 rounded-lg py-1 px-4"> Close </button>`
+        modale_eligibles.append(container_emp_elegibles);
+
+        zone_a_clique.employes_eligibles_z.forEach(emp_elegible => {
+            const element_employe = document.createElement("div");
+            element_employe.className = "flex items-center gap-2 bg-gray-100 rounded-xl overflow-hidden w-36 h-12 md:w-48 md:ml-2 cursor-pointer";
+            // element_employe.innerHTML = '';
+            element_employe.innerHTML = `
+            <img src="${emp_elegible.photo_em}"
+                alt="profil" class="w-12 h-12 rounded-r-full object-cover">
+            <div>
+                <p class="text-[#1e2939] text-xs">${emp_elegible.nom_prenom_em}</p>
+                <p class="text-[#99a1af] text-xs font-light">${emp_elegible.role_em}</p>
+            </div>`;
+            container_emp_elegibles.prepend(element_employe);
+        })
+    } else {
+        modale_eligibles.innerHTML = `
         <div class="bg-white p-4 rounded-lg flex flex-col justify-center items-center">
             <p class="text-xl text-red-600"> Y a pas des employés éligibles</p>
             <button id="close-eligible" class="text-white bg-red-600 rounded-lg py-1 px-4"> Close </button>
         </div>`
-    // if(zone == "staff" || zone == "conference"){
-    //     modale_eligible.innerHTML = '';
-    //     roles_eligibles = ["Receptionists","IT Technicians","Security guards","Manager","Cleaning"];
-    //     afficher_employes_eligibles(roles_eligibles);
-    // }    
+    }
+
     const btn_close = document.getElementById("close-eligible");
     btn_close.addEventListener('click', () => {
-        modale_eligible.classList.add('hidden');
+        modale_eligibles.classList.add('hidden');
     });
 }
 
@@ -469,31 +492,25 @@ btn_enregistrer.addEventListener('click', () => {
 })
 
 btn_staff.addEventListener('click', () => {
-    const zone = "staff";
-    restrictions_zone(zone);
+    restriction_zone(1, "container-staff");
 });
 
 btn_reception.addEventListener('click', () => {
-    const zone = "reception";
-    restrictions_zone(zone);
+
 });
 
 btn_security.addEventListener('click', () => {
-    const zone = "security";
-    restrictions_zone(zone);
+
 });
 
 btn_conference.addEventListener('click', () => {
-    const zone = "conference";
-    restrictions_zone(zone);
+
 });
 
 btn_archives.addEventListener('click', () => {
-    const zone = "archives";
-    restrictions_zone(zone);
+
 });
 
 btn_server.addEventListener('click', () => {
-    const zone = "server";
-    restrictions_zone(zone);
+
 });
