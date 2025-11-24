@@ -20,6 +20,7 @@ const id_photo = document.getElementById("id-photo");
 
 const partie_experience = document.getElementById("partie-experience");
 const btn_ajouter_experience = document.getElementById("btn-ajouter-experience");
+
 // localStorage.clear("employes")
 let liste_employes = [];
 let id_employe = 0;
@@ -40,11 +41,50 @@ if (donnees_stockees) {
     afficher_employes_non_assignes();
 }
 
+function afficher_details_employe(employe) {
+    const container_details = document.getElementById("modale-details");
+    container_details.classList.remove('hidden');
+    container_details.innerHTML = '';
+
+    const informations_employe = document.createElement("div");
+    informations_employe.className = "bg-white p-4 rounded-xl flex flex-col items-center gap-4"
+    let html = `
+        <img src="${employe.photo_em}"
+            alt="profil" class="w-24 h-24 rounded-full object-cover">
+        <div class="border-2 border-dashed p-4 w-full rounded-xl relative ">
+            <span class="absolute -top-3 left-2 px-1 bg-white">Données personnelles :</span>           
+            <div class="mt-2">
+                <p class="text-[#1e2939]">Full Name : <span class="text-[#99a1af]">${employe.nom_prenom_em}</span></p>
+                <p class="text-[#1e2939]">Role : <span class="text-[#99a1af]">${employe.role_em}</span></p>
+                <p class="text-[#1e2939]">Email : <span class="text-[#99a1af]">${employe.email_em}</span></p>
+                <p class="text-[#1e2939]">Phone : <span class="text-[#99a1af]">${employe.phone_em}</span></p>
+            </div>
+        </div>`;
+    if (employe.experiences_em > 0) {
+        html += `<div class="w-full flex flex-col gap-2 mt-4">`;
+        employe.experiences_em.forEach((exp, index) => {
+            html += `
+                <div class="border-2 border-dashed p-3 rounded-xl relative">
+                    <span class="absolute -top-3 left-2 px-1 bg-white">Expérience ${index + 1}</span>
+                    <p class="text-[#1e2939]">Entreprise : <span class="text-[#99a1af]">${exp.entreprise_ex}</span></p>
+                    <p class="text-[#1e2939]">Poste : <span class="text-[#99a1af]">${exp.poste_ex}</span></p>
+                    <p class="text-[#1e2939]">Début : <span class="text-[#99a1af]">${exp.date_debut_ex}</span></p>
+                    <p class="text-[#1e2939]">Fin : <span class="text-[#99a1af]">${exp.date_fin_ex}</span></p>
+                </div>
+            `;
+        });
+        html += `</div>`;
+    }
+    informations_employe.innerHTML = html;
+    container_details.appendChild(informations_employe);
+}
+
+
 function afficher_employes_non_assignes() {
     const employe_non_assignes = document.getElementById("employes-non-assignes");
     liste_employes.forEach(emp => {
         const element_employe = document.createElement("div");
-        element_employe.className = "flex items-center gap-3 bg-gray-100 rounded-xl overflow-hidden shrink-0 md:shrink w-52 h-12 md:w-60 md:ml-2";
+        element_employe.className = "flex items-center gap-3 bg-gray-100 rounded-xl overflow-hidden shrink-0 md:shrink w-52 h-12 md:w-60 md:ml-2 cursor-pointer";
         element_employe.innerHTML = `
             <img src="${emp.photo_em}"
                 alt="profil" class="w-12 h-12 rounded-r-full object-cover">
@@ -52,6 +92,11 @@ function afficher_employes_non_assignes() {
                 <p class="text-[#1e2939] text-xs">${emp.nom_prenom_em}</p>
                 <p class="text-[#99a1af] text-xs font-light">${emp.role_em}</p>
             </div>`;
+
+        element_employe.addEventListener('click', () => {
+            afficher_details_employe(emp)
+        });
+
         employe_non_assignes.prepend(element_employe);
     });
 }
@@ -245,15 +290,6 @@ function verification_presence_format() {
 
         //let saisi;
         let cmp = 0;
-        //alert("avant validation experience");
-        // if (experience.querySelector("#nom-entreprise").value.trim() == "" && experience.querySelector("#poste").value.trim() == ""
-        //     && experience.querySelector("#date-debut").value.trim() == "" && experience.querySelector("#date-fin").value.trim() == "") {
-        //     saisi = false;
-        //     alert("n'a pas saisi experience");
-        // } else {
-        //     saisi = true;
-        //     alert("il a saisi experience");
-        // }
 
         while (cmp < nb_experience && experience_isValid == true) {
             // alert("avant validation d entreprise");
