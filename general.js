@@ -47,7 +47,7 @@ const zone = [{
     id_z: 1,
     name_z: "staff room",
     roles_eligibles_z: ["Receptionists", "IT Technicians", "Security guards", "Manager", "Cleaning"],
-    nombre_limite_z: 4,
+    nombre_limite_z: 6,
     employes_eligibles_z: []
 },
 {
@@ -124,6 +124,23 @@ function restriction_zone(id_zo, id_container_zo) {
                 <p class="text-[#1e2939] text-xs">${emp_elegible.nom_prenom_em}</p>
                 <p class="text-[#99a1af] text-xs font-light">${emp_elegible.role_em}</p>
             </div>`;
+
+            element_employe.addEventListener('click', () => {
+                modale_eligibles.classList.add('hidden');
+                const id_container = document.getElementById(id_container_zo);
+                const element_zone = document.createElement('div');
+                element_zone.className = "flex items-center gap-2 bg-gray-100 rounded-xl overflow-hidden w-40 h-8 m-2";
+                element_zone.innerHTML = `
+                    <img src="${emp_elegible.photo_em}"
+                        alt="profil" class="w-8 h-8 rounded-r-full object-cover">
+                    <div>
+                        <p class="text-[#1e2939] text-xs">${emp_elegible.nom_prenom_em}</p>
+                        <p class="text-[#99a1af] text-xs font-extralight">${emp_elegible.role_em}</p>
+                    </div>
+                    <button class="text-red-600">&times;</button>`;
+                id_container.append(element_zone);    
+            })
+
             container_emp_elegibles.prepend(element_employe);
         })
     } else {
@@ -133,7 +150,7 @@ function restriction_zone(id_zo, id_container_zo) {
             <button id="close-eligible" class="text-white bg-red-600 rounded-lg py-1 px-4"> Close </button>
         </div>`
     }
-
+    
     const btn_close = document.getElementById("close-eligible");
     btn_close.addEventListener('click', () => {
         modale_eligibles.classList.add('hidden');
