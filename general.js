@@ -34,8 +34,50 @@ let id_employe = 0;
 let photo = "https://img.freepik.com/vecteurs-libre/cercle-bleu-utilisateur-blanc_78370-4707.jpg?semt=ais_hybrid&w=740&q=80";
 
 let experience_ajouter = false;
-
 let donnees_stockees = localStorage.getItem("employes");
+
+const restrictions_zone = [{
+    zone_id: 1,
+    zone_name: "conference",
+    roles_eligibles: ["Receptionists", "IT Technicians", "Security guards", "Manager", "Cleaning"],
+    nombre_limite: 10,
+    employes_assignes: []
+},
+{
+    zone_id: 2,
+    zone_name: "staff",
+    roles_eligibles: ["Receptionists", "IT Technicians", "Security guards", "Manager", "Cleaning"],
+    nombre_limite: 6,
+    employes_assignes: []
+},
+{
+    zone_id: 3,
+    zone_name: "reception",
+    roles_eligibles: ["Receptionists","Manager","Cleaning"],
+    nombre_limite: 2,
+    employes_assignes: []
+},
+{
+    zone_id: 4,
+    zone_name: "security",
+    roles_eligibles: ["Security guards", "Manager", "Cleaning"],
+    nombre_limite: 2,
+    employes_assignes: []
+},
+{
+    zone_id: 5,
+    zone_name: "server",
+    roles_eligibles: ["IT Technicians", "Manager", "Cleaning"],
+    nombre_limite: 2,
+    employes_assignes: []
+},
+{
+    zone_id: 6,
+    zone_name: "archives",
+    roles_eligibles: ["Receptionists", "IT Technicians", "Security guards", "Manager"],
+    nombre_limite: 2,
+    employes_assignes: []
+}]
 
 
 function sauvedarder_employes() {
@@ -54,8 +96,8 @@ if (donnees_stockees) {
 //         if(liste_employes[i].role_em)
 //     }
 // }
-function restrictions_zone(zone){
-    const roles_eligibles = [];
+function restrictions_zone(zone) {
+    // const roles_eligibles = [];
     const modale_eligible = document.getElementById("modale-eligible");
     modale_eligible.classList.remove('hidden');
     modale_eligible.innerHTML = '';
@@ -64,15 +106,15 @@ function restrictions_zone(zone){
             <p class="text-xl text-red-600"> Y a pas des employés éligibles</p>
             <button id="close-eligible" class="text-white bg-red-600 rounded-lg py-1 px-4"> Close </button>
         </div>`
-    if(zone == "staff" || zone == "conference"){
-        modale_eligible.innerHTML = '';
-        roles_eligibles = ["Receptionists","IT Technicians","Security guards","Manager","Cleaning"];
-        afficher_employes_eligibles(roles_eligibles);
-    }    
-    const btn_close = document.getElementById("close-eligible");  
-    btn_close.addEventListener('click', ()=>{
+    // if(zone == "staff" || zone == "conference"){
+    //     modale_eligible.innerHTML = '';
+    //     roles_eligibles = ["Receptionists","IT Technicians","Security guards","Manager","Cleaning"];
+    //     afficher_employes_eligibles(roles_eligibles);
+    // }    
+    const btn_close = document.getElementById("close-eligible");
+    btn_close.addEventListener('click', () => {
         modale_eligible.classList.add('hidden');
-    }); 
+    });
 }
 
 
@@ -117,7 +159,7 @@ function afficher_details_employe(employe) {
     informations_employe.innerHTML = html;
     container_details.appendChild(informations_employe);
     const btn_quitter_details = document.getElementById("btn-quitter-details");
-    btn_quitter_details.addEventListener('click', ()=>{
+    btn_quitter_details.addEventListener('click', () => {
         container_details.classList.add('hidden');
     });
 }
@@ -426,32 +468,32 @@ btn_enregistrer.addEventListener('click', () => {
     verification_presence_format();
 })
 
-btn_staff.addEventListener('click', ()=>{
+btn_staff.addEventListener('click', () => {
     const zone = "staff";
     restrictions_zone(zone);
 });
 
-btn_reception.addEventListener('click', ()=>{
+btn_reception.addEventListener('click', () => {
     const zone = "reception";
     restrictions_zone(zone);
 });
 
-btn_security.addEventListener('click', ()=>{
+btn_security.addEventListener('click', () => {
     const zone = "security";
     restrictions_zone(zone);
 });
 
-btn_conference.addEventListener('click', ()=>{
+btn_conference.addEventListener('click', () => {
     const zone = "conference";
     restrictions_zone(zone);
 });
 
-btn_archives.addEventListener('click', ()=>{
+btn_archives.addEventListener('click', () => {
     const zone = "archives";
     restrictions_zone(zone);
 });
 
-btn_server.addEventListener('click', ()=>{
+btn_server.addEventListener('click', () => {
     const zone = "server";
     restrictions_zone(zone);
 });
