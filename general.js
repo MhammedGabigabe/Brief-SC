@@ -47,11 +47,14 @@ function afficher_details_employe(employe) {
     container_details.innerHTML = '';
 
     const informations_employe = document.createElement("div");
-    informations_employe.className = "bg-white p-4 rounded-xl flex flex-col items-center gap-4"
+    informations_employe.className = "w-full max-w-lg bg-white p-4 rounded-xl flex flex-col items-center gap-6 h-[470px]"
     let html = `
-        <img src="${employe.photo_em}"
-            alt="profil" class="w-24 h-24 rounded-full object-cover">
-        <div class="border-2 border-dashed p-4 w-full rounded-xl relative ">
+        <div class="flex justify-beetwen relative">
+            <img src="${employe.photo_em}"
+                alt="profil" class="w-24 h-24 rounded-full object-cover">
+            <button id="btn-quitter-details" class="text-red-600 text-3xl absolute left-64 ">&times;</button>
+        </div>    
+        <div class="border-2 border-dashed p-4 w-full rounded-xl relative">
             <span class="absolute -top-3 left-2 px-1 bg-white">Données personnelles :</span>           
             <div class="mt-2">
                 <p class="text-[#1e2939]">Full Name : <span class="text-[#99a1af]">${employe.nom_prenom_em}</span></p>
@@ -59,12 +62,13 @@ function afficher_details_employe(employe) {
                 <p class="text-[#1e2939]">Email : <span class="text-[#99a1af]">${employe.email_em}</span></p>
                 <p class="text-[#1e2939]">Phone : <span class="text-[#99a1af]">${employe.phone_em}</span></p>
             </div>
-        </div>`;
-    if (employe.experiences_em > 0) {
-        html += `<div class="w-full flex flex-col gap-2 mt-4">`;
+        </div>
+        `;
+    if (employe.experiences_em.length > 0) {
+        html += `<div class="w-full max-h-64 overflow-y-auto flex flex-col gap-2 p-2">`;
         employe.experiences_em.forEach((exp, index) => {
             html += `
-                <div class="border-2 border-dashed p-3 rounded-xl relative">
+                <div class="border-2 border-dashed p-3 mb-2 rounded-xl relative">
                     <span class="absolute -top-3 left-2 px-1 bg-white">Expérience ${index + 1}</span>
                     <p class="text-[#1e2939]">Entreprise : <span class="text-[#99a1af]">${exp.entreprise_ex}</span></p>
                     <p class="text-[#1e2939]">Poste : <span class="text-[#99a1af]">${exp.poste_ex}</span></p>
@@ -77,6 +81,10 @@ function afficher_details_employe(employe) {
     }
     informations_employe.innerHTML = html;
     container_details.appendChild(informations_employe);
+    const btn_quitter_details = document.getElementById("btn-quitter-details");
+    btn_quitter_details.addEventListener('click', ()=>{
+        container_details.classList.add('hidden');
+    });
 }
 
 
