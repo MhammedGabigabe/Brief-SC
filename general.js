@@ -122,7 +122,7 @@ function restriction_zone(id_zo, id_container_zo) {
 
         const container_emp_elegibles = document.createElement("div");
         container_emp_elegibles.className = "bg-white p-4 rounded-lg flex flex-col gap-3 justify-center items-center"
-        // container_emp_elegibles.innerHTML = '';
+        
         container_emp_elegibles.innerHTML = `
             <button id="close-eligible" class="text-white bg-red-600 rounded-lg py-1 px-4"> Close </button>`
         modale_eligibles.append(container_emp_elegibles);
@@ -130,7 +130,7 @@ function restriction_zone(id_zo, id_container_zo) {
         zone_a_clique.employes_eligibles_z.forEach(emp_elegible => {
             const element_employe = document.createElement("div");
             element_employe.className = "flex items-center gap-2 bg-gray-100 rounded-xl overflow-hidden w-36 h-12 md:w-48 md:ml-2 cursor-pointer";
-            // element_employe.innerHTML = '';
+            
             element_employe.innerHTML = `
             <img src="${emp_elegible.photo_em}"
                 alt="profil" class="w-12 h-12 rounded-r-full object-cover">
@@ -154,8 +154,17 @@ function restriction_zone(id_zo, id_container_zo) {
                         <p class="text-[#1e2939] text-xs">${emp_elegible.nom_prenom_em}</p>
                         <p class="text-[#99a1af] text-xs font-extralight">${emp_elegible.role_em}</p>
                     </div>
-                    <button class="text-red-600">&times;</button>`;
+                    <button id="retirer-employe" class="text-red-600">&times;</button>`;
                 id_container.append(element_zone);
+                
+                element_zone.querySelector("#retirer-employe").addEventListener('click', ()=>{
+                    alert(emp_elegible.nom_prenom_em)
+                    zone_a_clique.employes_assignes_z= zone_a_clique.employes_assignes_z.filter(e=>e.id_em !== emp_elegible.id_em);
+                    element_zone.remove();
+                    liste_employes.push(emp_elegible);
+                    sauvedarder_employes();
+                    afficher_employes_non_assignes();
+                })
                 for(let i=0; i<liste_employes.length; i++){
                     if(liste_employes[i].id_em == emp_elegible.id_em){
                         liste_employes.splice(i,1);
