@@ -542,11 +542,11 @@ btn_staff.addEventListener('click', () => {
 });
 
 btn_reception.addEventListener('click', () => {
-    restriction_zone(2, "container-reception")
+    restriction_zone(2, "container-reception");
 });
 
 btn_security.addEventListener('click', () => {
-
+    restriction_zone(3, "container-security");
 });
 
 btn_conference.addEventListener('click', () => {
