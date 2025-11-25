@@ -41,42 +41,48 @@ const zone = [{
     name_z: "conference room",
     roles_eligibles_z: ["Receptionists", "IT Technicians", "Security guards", "Manager", "Cleaning"],
     nombre_limite_z: 6,
-    employes_eligibles_z: []
+    employes_eligibles_z: [],
+    employes_assignes_z: []
 },
 {
     id_z: 1,
     name_z: "staff room",
     roles_eligibles_z: ["Receptionists", "IT Technicians", "Security guards", "Manager", "Cleaning"],
     nombre_limite_z: 6,
-    employes_eligibles_z: []
+    employes_eligibles_z: [],
+    employes_assignes_z: []
 },
 {
     id_z: 2,
     name_z: "reception",
     roles_eligibles_z: ["Receptionists", "Manager", "Cleaning"],
     nombre_limite_z: 2,
-    employes_eligibles_z: []
+    employes_eligibles_z: [],
+    employes_assignes_z: []
 },
 {
     id_z: 3,
     name_z: "security room",
     roles_eligibles_z: ["Security guards", "Manager", "Cleaning"],
     nombre_limite_z: 2,
-    employes_eligibles_z: []
+    employes_eligibles_z: [],
+    employes_assignes_z: []
 },
 {
     id_z: 6,
     name_z: "server room",
     roles_eligibles_z: ["IT Technicians", "Manager", "Cleaning"],
     nombre_limite_z: 2,
-    employes_eligibles_z: []
+    employes_eligibles_z: [],
+    employes_assignes_z: []
 },
 {
     id_z: 5,
     name_z: "archives room",
     roles_eligibles_z: ["Receptionists", "IT Technicians", "Security guards", "Manager"],
     nombre_limite_z: 2,
-    employes_eligibles_z: []
+    employes_eligibles_z: [],
+    employes_assignes_z: []
 }]
 
 
@@ -94,9 +100,15 @@ function restriction_zone(id_zo, id_container_zo) {
 
     const modale_eligibles = document.getElementById("modale-eligible");
     modale_eligibles.classList.remove('hidden');
-    modale_eligibles.innerHTML = '';
-
+    modale_eligibles.innerHTML = "";
     const zone_a_clique = zone.find(obj => obj.id_z === id_zo);
+
+    if (zone_a_clique.employes_assignes_z.length >= zone_a_clique.nombre_limite_z) {
+        alert("Espace insuffisant !!");
+        modale_eligibles.classList.add('hidden');
+        return; 
+    }
+
     zone_a_clique.employes_eligibles_z = [];
 
     for (let i = 0; i < liste_employes.length; i++) {
@@ -104,6 +116,8 @@ function restriction_zone(id_zo, id_container_zo) {
             zone_a_clique.employes_eligibles_z.push(liste_employes[i]);
         }
     }
+    console.log();
+
     if (zone_a_clique.employes_eligibles_z.length > 0) {
 
         const container_emp_elegibles = document.createElement("div");
@@ -127,7 +141,9 @@ function restriction_zone(id_zo, id_container_zo) {
 
             element_employe.addEventListener('click', () => {
                 modale_eligibles.classList.add('hidden');
-                
+
+                zone_a_clique.employes_assignes_z.push(emp_elegible);
+
                 const id_container = document.getElementById(id_container_zo);
                 const element_zone = document.createElement('div');
                 element_zone.className = "flex items-center gap-2 bg-gray-100 rounded-xl overflow-hidden w-40 h-8 m-2";
@@ -139,7 +155,15 @@ function restriction_zone(id_zo, id_container_zo) {
                         <p class="text-[#99a1af] text-xs font-extralight">${emp_elegible.role_em}</p>
                     </div>
                     <button class="text-red-600">&times;</button>`;
-                id_container.append(element_zone);    
+                id_container.append(element_zone);
+                for(let i=0; i<liste_employes.length; i++){
+                    if(liste_employes[i].id_em == emp_elegible.id_em){
+                        liste_employes.splice(i,1);
+                    }
+                }
+                sauvedarder_employes(liste_employes);
+                afficher_employes_non_assignes();
+
             })
 
             container_emp_elegibles.prepend(element_employe);
@@ -151,7 +175,7 @@ function restriction_zone(id_zo, id_container_zo) {
             <button id="close-eligible" class="text-white bg-red-600 rounded-lg py-1 px-4"> Close </button>
         </div>`
     }
-    
+
     const btn_close = document.getElementById("close-eligible");
     btn_close.addEventListener('click', () => {
         modale_eligibles.classList.add('hidden');
@@ -207,6 +231,7 @@ function afficher_details_employe(employe) {
 
 function afficher_employes_non_assignes() {
     const employe_non_assignes = document.getElementById("employes-non-assignes");
+    employe_non_assignes.innerHTML="";
     liste_employes.forEach(emp => {
         const element_employe = document.createElement("div");
         element_employe.className = "flex items-center gap-3 bg-gray-100 rounded-xl overflow-hidden shrink-0 md:shrink w-52 h-12 md:w-60 md:ml-2 cursor-pointer";
@@ -478,7 +503,9 @@ function verification_presence_format() {
     // alert("vieder les champs !!")
     vider_champs();
     // alert("avant refresh")
-    location.reload();
+    //location.reload();
+
+    afficher_employes_non_assignes();
 }
 
 btn_ajouter_experience.addEventListener('click', () => {
@@ -507,6 +534,9 @@ btn_quitter.addEventListener('click', () => {
 
 btn_enregistrer.addEventListener('click', () => {
     verification_presence_format();
+    alert("1")
+    afficher_employes_non_assignes();
+    alert("2")
 })
 
 btn_staff.addEventListener('click', () => {
