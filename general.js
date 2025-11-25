@@ -127,6 +127,7 @@ function restriction_zone(id_zo, id_container_zo) {
 
             element_employe.addEventListener('click', () => {
                 modale_eligibles.classList.add('hidden');
+                
                 const id_container = document.getElementById(id_container_zo);
                 const element_zone = document.createElement('div');
                 element_zone.className = "flex items-center gap-2 bg-gray-100 rounded-xl overflow-hidden w-40 h-8 m-2";
