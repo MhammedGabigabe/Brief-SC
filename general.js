@@ -558,5 +558,5 @@ btn_archives.addEventListener('click', () => {
 });
 
 btn_server.addEventListener('click', () => {
-
+    restriction_zone(6, "container-server");
 });
