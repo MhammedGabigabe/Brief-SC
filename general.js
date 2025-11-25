@@ -85,6 +85,35 @@ const zone = [{
     employes_assignes_z: []
 }]
 
+function style_zone_obligatoire(){
+
+    const style_reception = document.getElementById("style-reception");
+    const style_security = document.getElementById("style-security");
+    const style_archives = document.getElementById("style-archives");
+    const style_server = document.getElementById("style-server");
+
+    if(zone[2].employes_assignes_z.length == 0){
+        style_reception.classList.add("bg-red-600");
+    }else{
+        style_reception.classList.remove("bg-red-600");
+    }
+    if(zone[3].employes_assignes_z.length == 0){
+        style_security.classList.add("bg-red-600");
+    }else{
+         style_security.classList.remove("bg-red-600");
+    }
+      if(zone[5].employes_assignes_z.length == 0){
+       style_archives.classList.add("bg-red-600");
+    }else{
+        style_archives.classList.remove("bg-red-600");
+    }
+      if(zone[4].employes_assignes_z.length == 0){
+        style_server.classList.add("bg-red-600");
+    }else{
+        style_server.classList.remove("bg-red-600");
+    }
+}
+style_zone_obligatoire();
 
 function sauvedarder_employes() {
     localStorage.setItem("employes", JSON.stringify(liste_employes));
@@ -106,7 +135,7 @@ function restriction_zone(id_zo, id_container_zo) {
     if (zone_a_clique.employes_assignes_z.length >= zone_a_clique.nombre_limite_z) {
         alert("Espace insuffisant !!");
         modale_eligibles.classList.add('hidden');
-        return; 
+        return;
     }
 
     zone_a_clique.employes_eligibles_z = [];
@@ -122,7 +151,7 @@ function restriction_zone(id_zo, id_container_zo) {
 
         const container_emp_elegibles = document.createElement("div");
         container_emp_elegibles.className = "bg-white p-4 rounded-lg flex flex-col gap-3 justify-center items-center"
-        
+
         container_emp_elegibles.innerHTML = `
             <button id="close-eligible" class="text-white bg-red-600 rounded-lg py-1 px-4"> Close </button>`
         modale_eligibles.append(container_emp_elegibles);
@@ -130,7 +159,7 @@ function restriction_zone(id_zo, id_container_zo) {
         zone_a_clique.employes_eligibles_z.forEach(emp_elegible => {
             const element_employe = document.createElement("div");
             element_employe.className = "flex items-center gap-2 bg-gray-100 rounded-xl overflow-hidden w-36 h-12 md:w-48 md:ml-2 cursor-pointer";
-            
+
             element_employe.innerHTML = `
             <img src="${emp_elegible.photo_em}"
                 alt="profil" class="w-12 h-12 rounded-r-full object-cover">
@@ -143,10 +172,10 @@ function restriction_zone(id_zo, id_container_zo) {
                 modale_eligibles.classList.add('hidden');
 
                 zone_a_clique.employes_assignes_z.push(emp_elegible);
-
+                style_zone_obligatoire();
                 const id_container = document.getElementById(id_container_zo);
                 const element_zone = document.createElement('div');
-                element_zone.className = "flex items-center gap-2 bg-gray-100 rounded-xl overflow-hidden w-40 h-8 m-2";
+                element_zone.className = "flex items-center gap-2 bg-gray-100 rounded-xl overflow-hidden w-40 h-8 m-2 cursor-pointer";
                 element_zone.innerHTML = `
                     <img src="${emp_elegible.photo_em}"
                         alt="profil" class="w-8 h-8 rounded-r-full object-cover">
@@ -156,18 +185,22 @@ function restriction_zone(id_zo, id_container_zo) {
                     </div>
                     <button id="retirer-employe" class="text-red-600">&times;</button>`;
                 id_container.append(element_zone);
+//ggggggg
+                element_employe.addEventListener('click', () =>{
+
+                })
                 
-                element_zone.querySelector("#retirer-employe").addEventListener('click', ()=>{
-                    alert(emp_elegible.nom_prenom_em)
-                    zone_a_clique.employes_assignes_z= zone_a_clique.employes_assignes_z.filter(e=>e.id_em !== emp_elegible.id_em);
+                element_zone.querySelector("#retirer-employe").addEventListener('click', () => {
+                    zone_a_clique.employes_assignes_z = zone_a_clique.employes_assignes_z.filter(e => e.id_em !== emp_elegible.id_em);
                     element_zone.remove();
                     liste_employes.push(emp_elegible);
                     sauvedarder_employes();
                     afficher_employes_non_assignes();
+                    style_zone_obligatoire();
                 })
-                for(let i=0; i<liste_employes.length; i++){
-                    if(liste_employes[i].id_em == emp_elegible.id_em){
-                        liste_employes.splice(i,1);
+                for (let i = 0; i < liste_employes.length; i++) {
+                    if (liste_employes[i].id_em == emp_elegible.id_em) {
+                        liste_employes.splice(i, 1);
                     }
                 }
                 sauvedarder_employes(liste_employes);
@@ -240,7 +273,7 @@ function afficher_details_employe(employe) {
 
 function afficher_employes_non_assignes() {
     const employe_non_assignes = document.getElementById("employes-non-assignes");
-    employe_non_assignes.innerHTML="";
+    employe_non_assignes.innerHTML = "";
     liste_employes.forEach(emp => {
         const element_employe = document.createElement("div");
         element_employe.className = "flex items-center gap-3 bg-gray-100 rounded-xl overflow-hidden shrink-0 md:shrink w-52 h-12 md:w-60 md:ml-2 cursor-pointer";
