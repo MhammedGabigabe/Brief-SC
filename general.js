@@ -554,7 +554,7 @@ btn_conference.addEventListener('click', () => {
 });
 
 btn_archives.addEventListener('click', () => {
-
+    restriction_zone(5, "container-archives");
 });
 
 btn_server.addEventListener('click', () => {
