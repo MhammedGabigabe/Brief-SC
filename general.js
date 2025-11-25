@@ -550,7 +550,7 @@ btn_security.addEventListener('click', () => {
 });
 
 btn_conference.addEventListener('click', () => {
-
+    restriction_zone(4, "container-conference");
 });
 
 btn_archives.addEventListener('click', () => {
