@@ -534,9 +534,7 @@ btn_quitter.addEventListener('click', () => {
 
 btn_enregistrer.addEventListener('click', () => {
     verification_presence_format();
-    alert("1")
     afficher_employes_non_assignes();
-    alert("2")
 })
 
 btn_staff.addEventListener('click', () => {
@@ -544,7 +542,7 @@ btn_staff.addEventListener('click', () => {
 });
 
 btn_reception.addEventListener('click', () => {
-
+    restriction_zone(2, "container-reception")
 });
 
 btn_security.addEventListener('click', () => {
