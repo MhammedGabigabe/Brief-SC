@@ -85,31 +85,31 @@ const zone = [{
     employes_assignes_z: []
 }]
 
-function style_zone_obligatoire(){
+function style_zone_obligatoire() {
 
     const style_reception = document.getElementById("style-reception");
     const style_security = document.getElementById("style-security");
     const style_archives = document.getElementById("style-archives");
     const style_server = document.getElementById("style-server");
 
-    if(zone[2].employes_assignes_z.length == 0){
+    if (zone[2].employes_assignes_z.length == 0) {
         style_reception.classList.add("bg-red-600");
-    }else{
+    } else {
         style_reception.classList.remove("bg-red-600");
     }
-    if(zone[3].employes_assignes_z.length == 0){
+    if (zone[3].employes_assignes_z.length == 0) {
         style_security.classList.add("bg-red-600");
-    }else{
-         style_security.classList.remove("bg-red-600");
+    } else {
+        style_security.classList.remove("bg-red-600");
     }
-      if(zone[5].employes_assignes_z.length == 0){
-       style_archives.classList.add("bg-red-600");
-    }else{
+    if (zone[5].employes_assignes_z.length == 0) {
+        style_archives.classList.add("bg-red-600");
+    } else {
         style_archives.classList.remove("bg-red-600");
     }
-      if(zone[4].employes_assignes_z.length == 0){
+    if (zone[4].employes_assignes_z.length == 0) {
         style_server.classList.add("bg-red-600");
-    }else{
+    } else {
         style_server.classList.remove("bg-red-600");
     }
 }
@@ -173,6 +173,7 @@ function restriction_zone(id_zo, id_container_zo) {
 
                 zone_a_clique.employes_assignes_z.push(emp_elegible);
                 style_zone_obligatoire();
+
                 const id_container = document.getElementById(id_container_zo);
                 const element_zone = document.createElement('div');
                 element_zone.className = "flex items-center gap-2 bg-gray-100 rounded-xl overflow-hidden w-40 h-8 m-2 cursor-pointer";
@@ -185,12 +186,58 @@ function restriction_zone(id_zo, id_container_zo) {
                     </div>
                     <button id="retirer-employe" class="text-red-600">&times;</button>`;
                 id_container.append(element_zone);
-//ggggggg
-                element_employe.addEventListener('click', () =>{
 
-                })
-                
-                element_zone.querySelector("#retirer-employe").addEventListener('click', () => {
+                //afficher details employe
+                element_zone.addEventListener('click', () => {
+                    alert("ici")
+                    const container_details = document.getElementById("modale-details");
+                    container_details.classList.remove('hidden');
+                    container_details.innerHTML = '';
+
+                    const informations_employe = document.createElement("div");
+                    informations_employe.className = "w-full max-w-lg bg-white p-4 rounded-xl flex flex-col items-center gap-6 h-[470px]"
+                    let html = `
+                        <div class="flex justify-beetwen relative">
+                            <img src="${emp_elegible.photo_em}"
+                                alt="profil" class="w-24 h-24 rounded-full object-cover">
+                            <button id="btn-quitter-details" class="text-red-600 text-3xl absolute left-64 ">&times;</button>
+                        </div>    
+                        <div class="border-2 border-dashed p-4 w-full rounded-xl relative">
+                            <span class="absolute -top-3 left-2 px-1 bg-white">Données personnelles :</span>           
+                            <div class="mt-2">
+                                <p class="text-[#1e2939]">Full Name : <span class="text-[#99a1af]">${emp_elegible.nom_prenom_em}</span></p>
+                                <p class="text-[#1e2939]">Role : <span class="text-[#99a1af]">${emp_elegible.role_em}</span></p>
+                                <p class="text-[#1e2939]">Email : <span class="text-[#99a1af]">${emp_elegible.email_em}</span></p>
+                                <p class="text-[#1e2939]">Phone : <span class="text-[#99a1af]">${emp_elegible.phone_em}</span></p>
+                                   <p class="text-[#1e2939]">Localisation actuelle : <span class="text-[#99a1af]">${zone_a_clique.name_z}</span></p>
+                            </div>
+                        </div>
+                        `;
+                    if (emp_elegible.experiences_em.length > 0) {
+                        html += `<div class="w-full max-h-64 overflow-y-auto flex flex-col gap-2 p-2">`;
+                        emp_elegible.experiences_em.forEach((exp, index) => {
+                            html += `
+                                <div class="border-2 border-dashed p-3 mb-2 rounded-xl relative">
+                                    <span class="absolute -top-3 left-2 px-1 bg-white">Expérience ${index + 1}</span>
+                                    <p class="text-[#1e2939]">Entreprise : <span class="text-[#99a1af]">${exp.entreprise_ex}</span></p>
+                                    <p class="text-[#1e2939]">Poste : <span class="text-[#99a1af]">${exp.poste_ex}</span></p>
+                                    <p class="text-[#1e2939]">Début : <span class="text-[#99a1af]">${exp.date_debut_ex}</span></p>
+                                    <p class="text-[#1e2939]">Fin : <span class="text-[#99a1af]">${exp.date_fin_ex}</span></p>
+                                </div>
+                                `;
+                        });
+                        html += `</div>`;
+                    }
+                    informations_employe.innerHTML = html;
+                    container_details.appendChild(informations_employe);
+                    const btn_quitter_details = document.getElementById("btn-quitter-details");
+                    btn_quitter_details.addEventListener('click', () => {
+                        container_details.classList.add('hidden');
+                    });
+                });
+
+                element_zone.querySelector("#retirer-employe").addEventListener('click', (e) => {
+                    e.stopPropagation();
                     zone_a_clique.employes_assignes_z = zone_a_clique.employes_assignes_z.filter(e => e.id_em !== emp_elegible.id_em);
                     element_zone.remove();
                     liste_employes.push(emp_elegible);
@@ -602,3 +649,22 @@ btn_archives.addEventListener('click', () => {
 btn_server.addEventListener('click', () => {
     restriction_zone(6, "container-server");
 });
+
+// function emp_plus_exper(){
+
+//     let names=[];
+//     for(let i=0; i<liste_employes.length; i++){
+//         if(liste_employes[i].experiences_em.length >=2)
+//         {
+//             names.push(liste_employes[i].nom_prenom_em)
+//         }
+//     }
+//     if(names != null){
+//        for(let i=0; i<names.length; i++){
+//         console.log(names[i]);
+//        }
+//     }
+
+// }
+// emp_plus_exper();
+
